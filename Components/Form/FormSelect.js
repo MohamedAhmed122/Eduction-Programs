@@ -43,7 +43,8 @@ export default function FromSelect({label,options, ...props}) {
     const [field, meta, helpers] = useField(props);
 
     return (
-        <FormControl className={classes.formControl} error={meta.touched && !!meta.error}>
+      
+        <FormControl style={{width: '100%'}} className={classes.formControl} error={meta.touched && !!meta.error}>
          <InputLabel id="demo-mutiple-name-label">{label}</InputLabel>
             <Select 
             id="demo-mutiple-name-label"

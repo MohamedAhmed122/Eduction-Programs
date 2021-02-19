@@ -9,7 +9,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import styles from '../styles/index.module.css'
 
-import { initialValues, facultyOptions, directionOptions, groupOptions } from '../data/options'
+import { registerInitialValues, facultyOptions, directionOptions, groupOptions } from '../data/options'
 
 
 const validationSchema = Yup.object({
@@ -29,7 +29,7 @@ export default function Register() {
             <h1 className='main_title'>Welcome to Website name  </h1>
             <Formik 
               validationSchema={validationSchema}
-              initialValues={initialValues}
+              initialValues={registerInitialValues}
               onSubmit={(values)=> console.log(values)}
             >
             {({ values })=>(

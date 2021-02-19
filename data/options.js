@@ -1,6 +1,6 @@
 
 
-export const initialValues={
+export const registerInitialValues={
     name:'',
     email:"",
     password:'',
@@ -10,6 +10,17 @@ export const initialValues={
     direction:'',
     group :''
 }
+
+export const profileInitialValues={
+    name:'',
+    email:"",
+    faculty: '',
+    direction:'',
+    group :''
+}
+
+
+
 
 
 export const facultyOptions =[
