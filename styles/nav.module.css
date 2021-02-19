@@ -1,0 +1,22 @@
+.nav{
+    height: 80px;
+    width: 100%;
+    top: 0px;
+    background-color: #027373;
+    color: white !important;
+    z-index: 1000;
+    position: fixed;
+}
+.logo{
+    margin: 10px 50px;
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+}
+.link{
+    color: white !important;
+    margin-right: 70px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
