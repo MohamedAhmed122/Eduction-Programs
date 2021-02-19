@@ -39,6 +39,12 @@ button{
   align-items: center;
   justify-content: space-evenly;
 }
+.flex_wrap{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
 .flex_col{
   display: flex;
   align-items: center;

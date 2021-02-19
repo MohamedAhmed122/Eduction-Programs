@@ -13,9 +13,9 @@ import { initialValues, facultyOptions, directionOptions, groupOptions } from '.
 
 
 const validationSchema = Yup.object({
-    name: Yup.string().required(),
-    email: Yup.string().required().email(),
-    password: Yup.string().required().min(5),
+    name: Yup.string().required().label('Name'),
+    email: Yup.string().required().email().label('Email'),
+    password: Yup.string().required().min(5).label('Password'),
 });
 
 
