@@ -37,10 +37,10 @@ export default function AdminManageUser() {
                     <TableHead>
                         <TableRow>
                             <TableCell>ID</TableCell>
-                            <TableCell align="right">NAME</TableCell>
-                            <TableCell align="right">EMAIL</TableCell>
-                            <TableCell align="right">ADMIN</TableCell>
-                            <TableCell align="right">Teacher</TableCell>
+                            <TableCell align="center">NAME</TableCell>
+                            <TableCell align="center">EMAIL</TableCell>
+                            <TableCell align="center">ADMIN</TableCell>
+                            <TableCell align="center">Teacher</TableCell>
                             <TableCell align="right">ACTIONS</TableCell>
                         </TableRow>
                     </TableHead>
@@ -50,16 +50,16 @@ export default function AdminManageUser() {
                                 <TableCell component="th" scope="row">
                                     {users.id}
                                 </TableCell>
-                                <TableCell align="right">{users.name}</TableCell>
-                                <TableCell align="right">{users.email}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">{users.name}</TableCell>
+                                <TableCell align="center">{users.email}</TableCell>
+                                <TableCell align="center">
                                     {users.isAdmin ?
                                     <CheckCircleIcon fontSize='large' style={{color: 'green'}} /> 
                                     :
                                     <CancelIcon fontSize='large' style={{color:'red'}} />
                                     }
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
                                     {users.isTeacher?
                                     <CheckCircleIcon fontSize='large' style={{color: 'green'}} /> 
                                     :

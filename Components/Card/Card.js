@@ -16,12 +16,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    borderBottom: '7px solid green'
+    borderBottom: '7px solid #027373'
   
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%', 
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
- 
+  expanded:{}
 }));
 
 export default function CardItem({faculty}) {
@@ -51,7 +51,7 @@ export default function CardItem({faculty}) {
       {faculty.faculty} Faculty
       </Typography>
       {faculty.directions.map(dir =>(
-          <Typography paragraph key={dir.key} >{dir.name}</Typography>
+          <Typography paragraph key={dir.id} >{dir.name}</Typography>
       ))}       
       </CardContent>
       <CardActions disableSpacing>

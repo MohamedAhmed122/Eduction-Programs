@@ -39,11 +39,11 @@ export const facultyData =[
 
 export const users =[ 
   { id: '1', name:"Mohamed Youssef", email: "mohamed@mohamed.com", isTeacher: false, isAdmin: true  },
-  { id: '2', name:"Sun", email: "Sun@Sun.com", isTeacher: true, isAdmin: false  },
+  { id: '2', name:"Sun", email: "Sun@Sun.com", isTeacher: false, isAdmin: false  },
   { id: '3', name:"Redwoun", email: "Redwoun@Redwoun.com", isTeacher: false, isAdmin: true  },
   { id: '4', name:"Victor Skiba", email: "Victor@Victor.com", isTeacher: true, isAdmin: true  },
   { id: '5', name:"Mohamed Youssef", email: "mohamed@mohamed.com", isTeacher: false, isAdmin: false  },
-  { id: '5', name:"Mohamed Youssef", email: "mohamed@mohamed.com", isTeacher: false, isAdmin: false  },
+  { id: '6', name:"Mohamed Youssef", email: "mohamed@mohamed.com", isTeacher: false, isAdmin: false  },
    { id: '7', name:"Shity user", email: "shity@shity.com", isTeacher: true, isAdmin: false  },
 ]
 

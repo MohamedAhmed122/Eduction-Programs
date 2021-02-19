@@ -11,9 +11,7 @@ import {
     TableHead, 
     TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
@@ -27,9 +25,9 @@ export default function AdminManageFaculty() {
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell align="right">FACULTY NAME</TableCell>
-                        <TableCell align="right">DIRECTIONS</TableCell>
-                        <TableCell align="right">GROUP</TableCell>
+                        <TableCell align="center">FACULTY NAME</TableCell>
+                        <TableCell align="center">DIRECTIONS</TableCell>
+                        <TableCell align="center">GROUP</TableCell>
                         <TableCell align="right">ACTIONS</TableCell>
                     </TableRow>
                 </TableHead>
@@ -39,11 +37,11 @@ export default function AdminManageFaculty() {
                             <TableCell component="th" scope="row">
                                 {users.id}
                             </TableCell>
-                            <TableCell align="right">{users.faculty}</TableCell>
-                            <TableCell align="right">{users.directions.map(dir =>(
+                            <TableCell align="center"><h2>{users.faculty}</h2> </TableCell>
+                            <TableCell align="center">{users.directions.map(dir =>(
                                 <p style={{margin: 20}} key={dir.id}>{dir.name}</p>
                             ))}</TableCell>
-                            <TableCell align="right">{users.groups.map(dir =>(
+                            <TableCell align="center">{users.groups.map(dir =>(
                                 <div style={{margin: 20}} key={dir.id}>{dir.name}</div>
                             ))}</TableCell>
                             
