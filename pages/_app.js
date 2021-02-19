@@ -1,4 +1,4 @@
-import Navbar from '../Navbar/Nav'
+import Navbar from '../Layouts/Navbar/Nav'
 import { useRouter } from 'next/router'
 import '../styles/globals.css'
 

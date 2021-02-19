@@ -20,7 +20,7 @@ export default function disciplines() {
             }}
         >
             <Typical
-                steps={['TSU', 1000, 'TSU, Education Programs ', 500]}
+                steps={['TSU', 200, 'TSU, Education Programs ', 300]}
                 loop={Infinity}
                 wrapper="h1"
             />

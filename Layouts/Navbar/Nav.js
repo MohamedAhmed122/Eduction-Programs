@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import styles from '../styles/nav.module.css'
+import styles from '../../styles/nav.module.css'
 import classNames from 'classnames'
 
 import {Chip} from '@material-ui/core'
