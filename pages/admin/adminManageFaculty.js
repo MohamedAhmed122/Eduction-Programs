@@ -1,5 +1,5 @@
 
-import { facultyData } from '../data/data'
+import { facultyData } from '../../data/data'
 import { useRouter } from 'next/router'
 import { 
     Button, 

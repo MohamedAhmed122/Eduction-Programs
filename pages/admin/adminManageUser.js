@@ -1,6 +1,6 @@
-import Sidebar from "../Layouts/Sidebar/Sidebar";
-import SidebarRow from "../Layouts/Sidebar/SidebarRow";
-import { users } from '../data/data'
+import Sidebar from "../../Layouts/Sidebar/Sidebar";
+import SidebarRow from "../../Layouts/Sidebar/SidebarRow";
+import { users } from '../../data/data'
 import { useRouter } from 'next/router'
 import { 
     Button, 

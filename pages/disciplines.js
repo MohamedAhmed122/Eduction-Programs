@@ -1,4 +1,3 @@
-import { IconButton } from "@material-ui/core";
 import CardItems from "../Components/Card/Card";
 import { facultyData } from '../data/data'
 import PlayForWorkIcon from '@material-ui/icons/PlayForWork';
@@ -6,6 +5,7 @@ import Typical from 'react-typical'
 
 import style from '../styles/disciplines.module.css'
 
+// pop() , push('hello to the end), shit() , unshift('add to the start')
 
 export default function disciplines() {
     
@@ -24,6 +24,7 @@ export default function disciplines() {
                 loop={Infinity}
                 wrapper="h1"
             />
+            {/* <h1>TSU, Education Programs</h1> */}
             <h3 className={style.title}>Select Your  Faculty, direction & Group</h3>
             <div onClick={()=> handleScroll()}  className={style.iconContainer}>
                 <PlayForWorkIcon fontSize='large' style={{color:'white'}} />    
