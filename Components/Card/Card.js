@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -18,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     borderBottom: '7px solid #027373'
   
+  },
+  link:{
+    color: 'black',
+    textDecoration:'none'
   },
   media: {
     height: 0,
@@ -71,7 +76,8 @@ export default function CardItem({faculty}) {
           <Typography paragraph>Group:</Typography>
           <div className='flex_wrap'>  
             {faculty.groups.map(group =>(
-                <p key={group.id}>{group.name}</p>
+                <Link  href={`/semester/${group.id}`}  key={group.id}>
+                  <p className='link'> {group.name} </p></Link>
               ))
             }
           </div>

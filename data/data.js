@@ -19,8 +19,8 @@ export const facultyData =[
             { id: '2', name:'Linguistics English Language'},
         ],
         groups:[
-            { id: '1', name:'108134'},
-            { id: '2', name:'108323'},
+            { id: '3', name:'108134'},
+            { id: '4', name:'108323'},
         ]
     },
     {
@@ -31,8 +31,8 @@ export const facultyData =[
             { id: '2', name:'Science & Chemistry'},
         ],
         groups:[
-            { id: '1', name:'208134'},
-            { id: '2', name:'20323'},
+            { id: '5', name:'208134'},
+            { id: '6', name:'20323'},
         ]
     },
 ]

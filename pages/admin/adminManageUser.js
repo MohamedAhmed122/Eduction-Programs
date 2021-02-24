@@ -27,7 +27,7 @@ export default function AdminManageUser() {
         <div className='flex'>
             <Sidebar>
                 <SidebarRow Icon={AccountCircleIcon} title='Users' />
-                <SidebarRow Icon={AccountBalanceIcon} title='Faculty' onClick={()=>route.push('/adminManageFaculty')} />
+                <SidebarRow Icon={AccountBalanceIcon} title='Faculty' onClick={()=>route.push('/admin/adminManageFaculty')} />
                 <SidebarRow Icon={LibraryBooksIcon} title='Resources' />
 
             </Sidebar>

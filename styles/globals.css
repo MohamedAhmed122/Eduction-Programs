@@ -98,3 +98,12 @@ button{
 .span_color:hover{
   color: #97d3d3;
 }
+
+.link{
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link:hover{
+  color: gray;
+}
