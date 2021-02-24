@@ -9,7 +9,8 @@ export const facultyData =[
         groups:[
             { id: '1', name:'98134'},
             { id: '2', name:'98323'},
-        ]
+        ],
+      
     },
     {
         id: '2',
@@ -33,7 +34,8 @@ export const facultyData =[
         groups:[
             { id: '5', name:'208134'},
             { id: '6', name:'20323'},
-        ]
+        ],
+        
     },
 ]
 

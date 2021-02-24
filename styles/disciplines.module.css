@@ -31,3 +31,22 @@
     align-items: center;
     justify-content: center;
 }
+
+.card{
+    width: 90%;
+    margin-left: 5%;
+    min-height: 100vh;
+    height: auto;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.mainTitle{
+    color : #027373;
+    margin: 20px 10px;
+}
+.longText{
+    text-align: center;
+    font-weight: lighter;
+    margin: 10px 20px ;
+}
