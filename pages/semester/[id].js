@@ -10,7 +10,7 @@ export default function semester() {
 
 
     return (
-        <div className='flex_col' style={{marginTop: 160}}>
+        <div className='flex_col' style={{marginTop: 160, marginBottom: 190}}>
             <h1 className={styles.title}>Hits Faculty, CS Group 98123</h1>
             <div className='flex_between'>
                 <Card className={styles.card}>

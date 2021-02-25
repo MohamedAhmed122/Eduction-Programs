@@ -20,7 +20,6 @@ export default function Home() {
   const route = useRouter()
 
 
-
   return (
     <div className='flexAll'>
         <div  className={classNames(styles.loginSvgContainer, 'flex_center')}>

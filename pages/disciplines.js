@@ -30,10 +30,10 @@ export default function disciplines() {
                 <PlayForWorkIcon fontSize='large' style={{color:'white'}} />    
             </div>
         </div>
-        <div style={{marginTop:'5rem'}} className='flex_wrap'>
+        <div style={{marginTop:'5rem', marginBottom: '15rem'}} className='flex_wrap'>
           {facultyData.map(faculty => <CardItems key={faculty.id} faculty={faculty} />)}
         </div>
-        <div style={{margin: '30rem'}} />
+       
         </>
     )
 }

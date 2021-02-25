@@ -10,6 +10,8 @@ export default function DisciplineDetail() {
 
     // const {query : { id }} = useRouter()
 
+    
+
     return (
         <div style={{marginTop: 130}}> 
           <Card className={styles.card}>
@@ -27,8 +29,10 @@ export default function DisciplineDetail() {
             </div>
             <h3 className={styles.mainTitle}>Description</h3>
             <p className={styles.longText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <br/><br/>
             <h3 className={styles.mainTitle}>Reading & literature</h3>
             <p className={styles.longText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <br/><br/>
             <h3 className={styles.mainTitle}>Teachers</h3>
             <div className='flex_wrap' style={{marginTop: 50}}>
                 <Card>
