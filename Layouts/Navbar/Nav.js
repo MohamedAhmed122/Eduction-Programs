@@ -14,7 +14,7 @@ export default function Navbar({inverted = true}) {
 
     return (
         <div className={classNames('flex_between', styles.nav)}>
-            <div className={styles.logo}>
+            <div  className={styles.logo}>
                <LocalLibraryIcon className={styles.icon} />
                <h2 className={styles.logoText}>CourseBook</h2>
             </div>

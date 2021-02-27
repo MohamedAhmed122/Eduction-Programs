@@ -1,23 +1,12 @@
-import { useField } from "formik";
-import { FormControl, TextField } from '@material-ui/core';
 
-export default function FromInput({type, label, placeholder, ...props }) {
-    const [field, meta] = useField(props);
+export default function FormInput({error, width, placeholder,ref, label,  options, name, ...props}) {
     return (
-         <FormControl style={{width: '100%'}}  error={meta.touched && !!meta.error}>
-            <TextField
-            type={type}
-            placeholder={placeholder}
-            label={label} 
-            {...field} 
-            {...props}
-            error={meta.error && meta.touched}
-            helperText={meta.error && meta.touched && meta.error}
-            style={{
-                marginBottom: '0.5rem',
-                padding: 10,
-            }}
-            />
-        </FormControl>
+        <div style={{width: width}}>
+            <label className='label'>{label}</label>
+            <input className='input'  {...props} placeholder={placeholder} ref={ref} />
+            {error &&  <div style={{marginBottom: '1rem', marginTop:'-0.6rem'}}>
+                 <label className='error_label'  >{error}</label>
+            </div>}
+        </div>
     )
 }

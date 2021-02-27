@@ -21,7 +21,7 @@ export default function Footer({inverted = true}) {
                     <LocalLibraryIcon className={styles.icon} />
                     <h2 className={styles.logoText}>CourseBook</h2>
                 </div>
-                <div className={classNames(styles.footerEnd,  'flex')}> <Copyright /> Copyright by SmartDev </div>
+                <div className={classNames(styles.footerEnd,  'flex')}> <Copyright /> Copyright by SmartDev  </div>
             </footer>
         }
         </>

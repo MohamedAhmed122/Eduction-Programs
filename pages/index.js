@@ -26,7 +26,7 @@ export default function Home() {
             <Image height={500} width={500} src='/assets/login.svg' alt='Login image' />
         </div>
         <div className={classNames(styles.loginForm, 'flex_col')}>
-            <h1 className='main_title'>Welcome to Website name  </h1>
+            <h1 className='main_title'>Welcome to CourseBook  </h1>
             <Formik 
               validationSchema={validationSchema}
               initialValues={{email: '', password:''}}

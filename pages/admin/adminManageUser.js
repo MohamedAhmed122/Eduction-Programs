@@ -19,6 +19,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import GroupIcon from '@material-ui/icons/Group';
+import OpenWithIcon from '@material-ui/icons/OpenWith';
 
 export default function AdminManageUser() {
     const route = useRouter()
@@ -27,8 +29,10 @@ export default function AdminManageUser() {
         <div className='flex'>
             <Sidebar>
                 <SidebarRow Icon={AccountCircleIcon} title='Users' />
-                <SidebarRow Icon={AccountBalanceIcon} title='Faculty' onClick={()=>route.push('/admin/adminManageFaculty')} />
-                <SidebarRow Icon={LibraryBooksIcon} title='Resources' />
+                <SidebarRow Icon={LibraryBooksIcon} title='Disciplines' onClick={()=>route.push('/admin/adminManageFaculty')} />
+                <SidebarRow Icon={AccountBalanceIcon} title='Faculty' />
+                <SidebarRow Icon={OpenWithIcon} title='Direction' />
+                <SidebarRow Icon={GroupIcon} title='Group' />
 
             </Sidebar>
             <div style={{marginLeft: '15%', marginTop: '9rem', width:'80%', marginBottom: '4rem'}}>

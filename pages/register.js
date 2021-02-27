@@ -26,7 +26,7 @@ export default function Register() {
   return (
     <div className='flexAll'>
         <div className={classNames(styles.loginForm, 'flex_col')}>
-            <h1 className='main_title'>Welcome to Website name  </h1>
+            <h1 className='main_title'>Welcome to CourseBook </h1>
             <Formik 
               validationSchema={validationSchema}
               initialValues={registerInitialValues}
