@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   expanded:{}
 }));
 
-export default function CardItem({faculty}) {
+export default function CardItem() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -53,11 +53,9 @@ export default function CardItem({faculty}) {
     <Card  style={{margin: 50, width: 350,}} className={classes.root}>
       <CardContent>
       <Typography paragraph align='center' style={{color: '#027373', fontWeight:'bold', fontSize:25}}> 
-      {faculty.faculty} Faculty
+          Faculty Hits
       </Typography>
-      {faculty.directions.map(dir =>(
-          <Typography paragraph key={dir.id} >{dir.name}</Typography>
-      ))}       
+        Computer Science
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
@@ -75,11 +73,10 @@ export default function CardItem({faculty}) {
         <CardContent>
           <Typography paragraph>Group:</Typography>
           <div className='flex_wrap'>  
-            {faculty.groups.map(group =>(
-                <Link  href={`/semester/${group.id}`}  key={group.id}>
-                  <p className='link'> {group.name} </p></Link>
-              ))
-            }
+           <p>9713</p>
+           <p>9712</p>
+           <p>9714</p>
+           <p>9715</p>
           </div>
         </CardContent>
       </Collapse>
