@@ -1,17 +1,14 @@
 import { useRouter } from 'next/router'
-
 import Image from 'next/image'
-import classNames from 'classnames'
-import styles from '../styles/index.module.css'
-import axios from 'axios'
-
 import { useForm,Controller } from "react-hook-form";
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
-import InputSelect from "../Components/Form/InputSelect";
 import FormInput from "../Components/Form/FormInput";
-import { useEffect } from 'react';
+
+import classNames from 'classnames'
+import styles from '../styles/index.module.css'
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../Redux/Auth/AuthActions';
 
 
 const validationSchema = Yup.object({
@@ -23,34 +20,18 @@ const validationSchema = Yup.object({
 export default function Home() {
 
   const route = useRouter()
+  const dispatch = useDispatch()
   
 
   const { handleSubmit, errors, control  } = useForm({
     resolver: yupResolver(validationSchema)
   });
 
-  // const fetchData = async () =>{
-  //   try {
-  //     const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImQyOTc2NDBlLWFmOGUtNGNiOC1iNzNiLWJlYjUyNGFlZWM2ZiIsImV4cCI6MTYxNDk2OTIyNywiaXNzIjoiQ291cnNlIEJvb2sgUHJvamVjdCIsImF1ZCI6IlVzZXJzIn0.Osh9GxFgkEQuZarykRcx0sqKSLx_ouLBV1JIEUjQGwA'
-  //     const config ={
-  //       headers:{
-  //           Authorization: `Bearer ${token}`,
-  //           'Content-Type': 'application/json',
-  //       }
-  //   }
-  //     const { data } = await axios.get('/profiles', config)
-  //     console.log(data)
-      
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
-  // useEffect(()=>{
-  //   fetchData()
-  // },[])
-
-  const onSubmit = data => console.log(data);
+  const onSubmit = data =>{ 
+    dispatch(userLogin(data.email, data.password))
+    console.log(data.email, data.password);
+  }
 
   return (
     <div className='flexAll'>

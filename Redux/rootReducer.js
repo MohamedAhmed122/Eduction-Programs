@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-// import { sendUserDataReducer } from './BuyCrypto/BuyCryptoReducer'
+import AuthReducer from './Auth/AuthReducer'
 
 const rootReducer = combineReducers({
-    // sendUserData : sendUserDataReducer,
+  auth : AuthReducer
 })
 
 export default rootReducer

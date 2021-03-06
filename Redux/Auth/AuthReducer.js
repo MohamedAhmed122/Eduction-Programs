@@ -15,7 +15,7 @@ const initialState ={
     error: null
 };
 
-const userReducer = (state = initialState, { type, payload } ) =>{
+const AuthReducer = (state = initialState, { type, payload } ) =>{
     switch(type){
         case USER_LOGIN_REQUEST:
             return{
@@ -64,4 +64,4 @@ const userReducer = (state = initialState, { type, payload } ) =>{
 
 
 
-export default userReducer;
+export default AuthReducer;
