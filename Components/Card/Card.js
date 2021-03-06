@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -17,12 +17,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    borderBottom: '7px solid #027373'
+    borderBottom: '7px solid #027373',
+   
   
-  },
-  link:{
-    color: 'black',
-    textDecoration:'none'
   },
   media: {
     height: 0,
@@ -35,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
+  link:{
+    textDecoration:"underline",
+    cursor: 'pointer'
+  },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
@@ -43,19 +44,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CardItem() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const router = useRouter()
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Card  style={{margin: 50, width: 350,}} className={classes.root}>
+    <Card  style={{margin: 50, width: 400,}} className={classes.root}>
       <CardContent>
-      <Typography paragraph align='center' style={{color: '#027373', fontWeight:'bold', fontSize:25}}> 
+      <Typography paragraph align='center' style={{color: '#027373', fontWeight:'bold', fontSize:25, marginBottom:30}}> 
           Faculty Hits
-      </Typography>
+      </Typography >
+      <Typography paragraph align='center' variant="h4"  > 
+
         Computer Science
+      </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
@@ -73,10 +78,10 @@ export default function CardItem() {
         <CardContent>
           <Typography paragraph>Group:</Typography>
           <div className='flex_wrap'>  
-           <p>9713</p>
-           <p>9712</p>
-           <p>9714</p>
-           <p>9715</p>
+           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9713</p>
+           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9712</p>
+           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9714</p>
+           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9715</p>
           </div>
         </CardContent>
       </Collapse>

@@ -1,9 +1,10 @@
-import React from 'react'
+import { Typography } from '@material-ui/core'
+
 
 export default function TeacherSubjects() {
     return (
         <div>
-            <h1 style={{ textAlign: 'center', marginTop: 100}}>TeacherSubjects</h1>
+           <Typography paragraph align='center' variant="h3"> Teacher Subjects</Typography>
         </div>
     )
 }

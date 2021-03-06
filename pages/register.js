@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import InputSelect from "../Components/Form/InputSelect";
 import FormInput from "../Components/Form/FormInput";
-import Select from "react-select";
+
 
 
 import Image from 'next/image'
