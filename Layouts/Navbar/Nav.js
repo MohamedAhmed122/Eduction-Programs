@@ -21,7 +21,7 @@ export default function Navbar({inverted = true}) {
             {!inverted && 
                 <div className='flex'>
                     <div className={styles.link} onClick={()=> route.push('/disciplines')}>Disciplines</div>
-                    <div className={styles.link} onClick={()=> route.push('/account')}>
+                    <div className={styles.link} onClick={()=> route.push('/profile')}>
                         <Chip style={{cursor: 'pointer'}} size='medium' label='Mohamed Youssef' icon={<FaceIcon />} />
                     </div>
                 </div>
