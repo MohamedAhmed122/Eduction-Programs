@@ -9,9 +9,9 @@ function MyApp({ Component, pageProps }) {
 
   return( 
     <>
-    <Navbar inverted={inverted} />
-    <Component {...pageProps} />
-    <Footer inverted={!inverted} />
+      <Navbar inverted={inverted} />
+      <Component {...pageProps} />
+      <Footer inverted={!inverted} />
     </>
   )
 }

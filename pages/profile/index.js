@@ -1,30 +1,30 @@
 import { useForm,Controller } from "react-hook-form";
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import FormInput from "../../Components/Form/FormInput";
+import { parseDateString } from '../../utils/Validate'
+import "yup-phone";
 
 import classNames from 'classnames'
-
 import { Card, Typography } from "@material-ui/core";
 import BackupIcon from '@material-ui/icons/Backup';
 
 
-
 import styles from '../../styles/profile.module.css'
-// import CustomButton from '../Components/CustomButton/CustomButton';
 
+const today = new Date()
 
 const validationSchema = Yup.object({
-    name: Yup.string().required().label('Name'),
-    dob: Yup.string().required().label('Date of Birth'),
-    phone:Yup.string().required().label('Phone'),
-  
+    name: Yup.string().required()
+        .label('Name').min(4, 'Invalid Name'),
+    dob:Yup.date().transform(parseDateString)
+    .max(today, "Invalid Date of birth"),
+    phone: Yup.string()
+    .phone("RU", true, 'Number is invalid')
+    .required(),  
 });
 const validationSchemaEmail = Yup.object({
-    email: Yup.string().email().required().label('Name'),
-   
-  
+    email: Yup.string().email().required().label('Email'),
 });
 
 export default function account() {
@@ -63,9 +63,9 @@ export default function account() {
                     <Controller
                     name="dob"
                     control={control}
-                    defaultValue="09.25.2012"
+                    defaultValue=""
                     render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Date of Birth'  error={errors.dob?.message} onChange={onChange} value={value} />}
+                        <FormInput  placeholder='Date of Birth (mm.dd.yyyy)'  error={errors.dob?.message} onChange={onChange} value={value} />}
                     />
                     <Controller
                     name="phone"
