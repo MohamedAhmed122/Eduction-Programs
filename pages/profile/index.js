@@ -11,6 +11,9 @@ import BackupIcon from '@material-ui/icons/Backup';
 
 
 import styles from '../../styles/profile.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from '../../Redux/profile/profileAction'
+import { useEffect } from "react";
 
 const today = new Date()
 
@@ -29,6 +32,9 @@ const validationSchemaEmail = Yup.object({
 
 export default function account() {
 
+    const dispatch = useDispatch()
+    const {profile, loading} = useSelector(state => state.profile)
+
     const {  handleSubmit, errors, control  } = useForm({
         resolver: yupResolver(validationSchema)
     });
@@ -40,35 +46,51 @@ export default function account() {
     const onSubmit = data => console.log(data);
     const onSubmitEmail = data => console.log(data);
     
+    useEffect(()=>{
+        dispatch(getProfile())
+    },[dispatch])
 
+    if(loading) return <div>loading....</div>
 
+    // console.log(profile.avatar, "avatar.....")
     
     return (
         <div style={{marginTop:'10rem'}} className='flex_col'>
             <Typography variant='h4'>Update Profile</Typography>
             <Card className={styles.card}>
-                <div className={classNames(styles.image, 'flex_col')}>
-                    <BackupIcon fontSize='large'/>
-                    <p className={styles.smallText}>drag and drop image here</p>
-                </div>
+                   
+                        <div className={classNames(styles.image, 'flex_col')}>
+                            <BackupIcon fontSize='large'/>
+                            <p className={styles.smallText}>drag and drop image here</p>
+                        </div>
+
+                    
                
                 <form  style={{width: '70%', marginTop: 30}}  onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                     name="name"
                     control={control}
-                    defaultValue=""
+                    defaultValue={profile.name}
                     render={({ onChange, value  }) => 
                         <FormInput  placeholder='Name'  error={errors.name?.message} onChange={onChange} value={value} />}
+                    />
+                     <Controller
+                    name="admissionYear"
+                    control={control}
+                    defaultValue={profile.admissionYear}
+                    render={({ onChange, value  }) => 
+                        <FormInput  placeholder='Admission Year'  error={errors.name?.message} onChange={onChange} value={value} />}
                     />
                     <Controller
                     name="dob"
                     control={control}
-                    defaultValue=""
+                    defaultValue={profile.birthday}
                     render={({ onChange, value  }) => 
                         <FormInput  placeholder='Date of Birth (mm.dd.yyyy)'  error={errors.dob?.message} onChange={onChange} value={value} />}
                     />
                     <Controller
                     name="phone"
+                    defaultValue={profile.phone}
                     control={control}
                     render={({ onChange, value  }) => 
                         <FormInput placeholder='Phone Number'  error={errors.phone?.message} onChange={onChange} value={value} />}
@@ -84,7 +106,7 @@ export default function account() {
                     <Controller
                     name="email"
                     control={controlEmail}
-                    defaultValue=""
+                    defaultValue={profile.email}
                     render={({ onChange, value  }) => 
                         <FormInput  placeholder='Email'  error={emailError.email?.message} onChange={onChange} value={value} />}
                     />
