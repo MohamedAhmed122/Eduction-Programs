@@ -1,112 +1,56 @@
-import { useForm,Controller } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from "yup";
-import FormInput from "../../Components/Form/FormInput";
-import { parseDateString } from '../../utils/Validate'
-import "yup-phone";
+import { Card } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
-import classNames from 'classnames'
-import { Card, Typography } from "@material-ui/core";
-import BackupIcon from '@material-ui/icons/Backup';
+import styles from './styleProfile.module.css'
 
+export default function Profile() {
 
-import styles from '../../styles/profile.module.css'
-import {  useSelector } from "react-redux";
+    const img ='https://www.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg'
 
+    const { profile, loading } = useSelector(state => state.profile)
 
-const today = new Date()
+    if (loading) return <div>loading ...</div>
 
-const validationSchema = Yup.object({
-    name: Yup.string().required()
-        .label('Name').min(4, 'Invalid Name'),
-    dob:Yup.date().transform(parseDateString)
-    .max(today, "Invalid Date of birth"),
-    phone: Yup.string()
-    .phone("RU", true, 'Number is invalid')
-    .required(),  
-});
-const validationSchemaEmail = Yup.object({
-    email: Yup.string().email().required().label('Email'),
-});
-
-export default function account() {
-
-    const {profile, loading} = useSelector(state => state.profile)
-    
-    const {  handleSubmit, errors, control  } = useForm({
-        resolver: yupResolver(validationSchema)
-    });
-    const {  handleSubmit : handleSubmitEmail, errors : emailError, control : controlEmail  } = useForm({
-        resolver: yupResolver(validationSchemaEmail)
-    });
-    
-    const onSubmit = data => console.log(data);
-    const onSubmitEmail = data => console.log(data);
-    
-   
-   
-
-    if(loading) return <div>loading....</div>
-
-    // console.log(profile.avatar, "avatar.....")
-    
     return (
-        <div style={{marginTop:'5rem'}} className='flex_col'>
-            <Typography variant='h4'>Update Profile</Typography>
+        <div>
             <Card className={styles.card}>
-                <div className={classNames(styles.image, 'flex_col')}>
-                    <BackupIcon fontSize='large'/>
-                    <p className={styles.smallText}>drag and drop image here</p>
+                <div className='flex_col'>
+                    <img className={styles.img} src={img} alt='img' />
                 </div>
-                <form  style={{width: '70%', marginTop: 30}}  onSubmit={handleSubmit(onSubmit)}>
-                    <Controller
-                    name="name"
-                    control={control}
-                    defaultValue={profile.name}
-                    render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Name'  error={errors.name?.message} onChange={onChange} value={value} />}
-                    />
-                     <Controller
-                    name="admissionYear"
-                    control={control}
-                    defaultValue={profile.admissionYear}
-                    render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Admission Year'  error={errors.name?.message} onChange={onChange} value={value} />}
-                    />
-                    <Controller
-                    name="dob"
-                    control={control}
-                    defaultValue={profile.birthday}
-                    render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Date of Birth (mm.dd.yyyy)'  error={errors.dob?.message} onChange={onChange} value={value} />}
-                    />
-                    <Controller
-                    name="phone"
-                    defaultValue={profile.phone}
-                    control={control}
-                    render={({ onChange, value  }) => 
-                        <FormInput placeholder='Phone Number'  error={errors.phone?.message} onChange={onChange} value={value} />}
-                    />
-                    <div className='flex_center' style={{margin: '2rem'}}>
-                        <button  style={{width: '70%'}} type='submit' className='btn_primary'> Update</button>
-                    </div>
-                </form>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Name:</h3>
+                    <p>{profile.name}</p>
+                </div>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Email:</h3>
+                    <p>{profile.email}</p>
+                </div>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Phone:</h3>
+                    <p>{profile.phone}</p>
+                </div>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>DOB:</h3>
+                    <p>{profile.birthday}</p>
+                </div>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Admission Year:</h3>
+                    <p>{profile.admissionYear}</p>
+                </div>
+                <br/><br/>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Faculty:</h3>
+                    <p>{profile.faculty}</p>
+                </div>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Direction:</h3>
+                    <p>{profile.direction}</p>
+                </div>
+                <div className='flex' style={{marginTop: 20}}>
+                    <h3 className={styles.mainText}>Group:</h3>
+                    <p>{profile.group}</p>
+                </div>
             </Card>
-            <Card className={styles.card}>
-                <Typography variant='h4'>Change Email</Typography>
-                <form  style={{width: '70%', marginTop: 30}}  onSubmit={handleSubmitEmail(onSubmitEmail)}>
-                    <Controller
-                    name="email"
-                    control={controlEmail}
-                    defaultValue={profile.email}
-                    render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Email'  error={emailError.email?.message} onChange={onChange} value={value} />}
-                    />
-                    <div className='flex_center' style={{margin: '2rem'}}>
-                        <button  style={{width: '70%'}} type='submit' className='btn_primary'> Update Email</button>
-                    </div>
-                </form>
-            </Card>        
         </div>
     )
 }

@@ -1,0 +1,22 @@
+.card{
+    margin-top: 100px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 40px;
+    margin-bottom: 100px;
+    
+}
+
+.img{
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    margin: 30px 0px;
+    box-shadow: 0px 4px 15px -5px #707070;
+    border-radius: 10px;
+}
+
+.mainText{
+    color: #027373;
+    margin-right: 20px;
+}
