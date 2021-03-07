@@ -1,6 +1,8 @@
+import{ useEffect } from 'react';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from "redux-persist/integration/react";
+import axios from 'axios';
 
 import { useRouter } from 'next/router'
 
@@ -16,6 +18,11 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
   const { pathname } = useRouter()
   const inverted = (pathname === '/register' || pathname === '/' ) ? true : false
+
+  useEffect(() => {
+    axios.defaults.baseURL = 'http://localhost:5000';
+
+  }, []);
 
   return( 
     <>

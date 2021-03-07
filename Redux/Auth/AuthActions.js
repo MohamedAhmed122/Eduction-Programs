@@ -20,7 +20,7 @@ export const userLogin = (email, password) => async(dispatch) =>{
                 'content-types': 'application/json'
             }
         }
-        const { data } = await axios.post('http://localhost:5000/Accounts/login',
+        const { data } = await axios.post('/Accounts/login',
             {email, password}, config
         )
 
@@ -54,7 +54,7 @@ export const userRegister = (value) => async(dispatch) =>{
         console.log(value)
       
         const { data } = await 
-        axios.post('http://localhost:5000/Accounts/register', (value), config )
+        axios.post('/Accounts/register', (value), config )
 
         dispatch({type: USER_LOGIN_SUCCESS, payload: data})
         dispatch({type: USER_REGISTER_SUCCESS, payload: data})
