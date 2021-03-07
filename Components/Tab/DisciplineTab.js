@@ -5,7 +5,7 @@ import TeacherSubjects from '../../Container/Semsters/TeacherSubjects'
 
 import style from './styleTab.module.css'
 
-export default function Tab() {
+export default function DisciplineTab() {
 
 
     const [ activeTab, setActiveTab ] = useState(0)
