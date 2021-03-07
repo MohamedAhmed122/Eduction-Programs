@@ -41,7 +41,7 @@ export const userLogout = () =>(dispatch) =>{
 }
 
 
-export const userRegister = (values) => async(dispatch) =>{
+export const userRegister = (value) => async(dispatch) =>{
     
     try {
         dispatch({ type: USER_REGISTER_REQUEST});
@@ -51,9 +51,10 @@ export const userRegister = (values) => async(dispatch) =>{
                 'content-types': 'application/json'
             }
         }
-        const { data } = await axios.post('http://localhost:5000/Accounts/register',
-            values, config
-        )
+        console.log(value)
+      
+        const { data } = await 
+        axios.post('http://localhost:5000/Accounts/register', (value), config )
 
         dispatch({type: USER_LOGIN_SUCCESS, payload: data})
         dispatch({type: USER_REGISTER_SUCCESS, payload: data})

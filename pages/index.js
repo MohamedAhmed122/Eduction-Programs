@@ -31,6 +31,7 @@ export default function Home() {
   const onSubmit = data =>{ 
     dispatch(userLogin(data.email, data.password))
     console.log(data.email, data.password);
+    route.push('/disciplines')
   }
 
   return (

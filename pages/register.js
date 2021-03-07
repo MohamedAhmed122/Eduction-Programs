@@ -6,7 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import InputSelect from "../Components/Form/InputSelect";
 import FormInput from "../Components/Form/FormInput";
-
+import { parseDateString } from '../utils/Validate'
+import "yup-phone";
 
 
 import Image from 'next/image'
@@ -15,13 +16,23 @@ import styles from '../styles/index.module.css'
 
 import {  facultyOptions, directionOptions, groupOptions } from '../data/options'
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { userRegister } from '../Redux/Auth/AuthActions'
 
+
+const today = new Date()
 
 const validationSchema = Yup.object({
     name: Yup.string().required().label('Name'),
     email: Yup.string().required().email().label('Email'),
     password: Yup.string().required().min(5).label('Password'),
-    student: Yup.bool()
+    student: Yup.bool(),
+    phone: Yup.string()
+    .phone("RU", true, 'Number is invalid')
+    .required(),  
+    dob:Yup.date().transform(parseDateString)
+    .max(today, "Invalid Date of birth"),
+    admissionYear :Yup.string().required().label('admission Year'),
     
 });
 
@@ -30,11 +41,26 @@ const validationSchema = Yup.object({
 export default function Register() {
     const  route  = useRouter()
     const [ checked, setChecked ] = useState(false)
+    const dispatch = useDispatch()
     const { register, handleSubmit, errors, control  } = useForm({
       resolver: yupResolver(validationSchema)
     });
+
     const onSubmit = data =>{ 
-      console.log(data);
+      const value ={
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.password,
+        birthday: data.dob,
+        phone: data.phone,
+        admissionYear: Number(data.admissionYear),
+        faculty:'none',
+        group:'none',
+        direction:'none'
+      }
+   
+      dispatch(userRegister(value))
       route.push('/disciplines')
 
     }
@@ -57,6 +83,27 @@ export default function Register() {
               defaultValue=""
               render={({ onChange, value  }) => 
                 <FormInput  placeholder='Email'  error={errors.email?.message} onChange={onChange} value={value} />}
+              />
+              <Controller
+                name="phone"
+                control={control}
+                defaultValue=""
+                render={({ onChange, value  }) => 
+                  <FormInput placeholder='Phone Number'   error={errors.password?.message} onChange={onChange} value={value} />}
+              />
+              <Controller
+                name="dob"
+                control={control}
+                defaultValue=""
+                render={({ onChange, value  }) => 
+                  <FormInput placeholder='Date of Birth ( mm.dd.yyy)'  error={errors.password?.message} onChange={onChange} value={value} />}
+              />
+              <Controller
+                name="admissionYear"
+                control={control}
+                defaultValue=""
+                render={({ onChange, value  }) => 
+                  <FormInput placeholder='Admission Year'   error={errors.password?.message} onChange={onChange} value={value} />}
               />
               <Controller
                 name="password"
