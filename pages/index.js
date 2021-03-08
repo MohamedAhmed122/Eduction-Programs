@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import {  useRouter } from 'next/router'
 import Image from 'next/image'
 import { useForm,Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,7 @@ import FormInput from "../Components/Form/FormInput";
 
 import classNames from 'classnames'
 import styles from '../styles/index.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../Redux/Auth/AuthActions';
 import { useEffect } from 'react';
 
@@ -22,82 +22,26 @@ export default function Home() {
 
   const route = useRouter()
   const dispatch = useDispatch()
+  const { isAuthenticated } = useSelector(state => state.auth)
   
-
+  
   const { handleSubmit, errors, control  } = useForm({
     resolver: yupResolver(validationSchema)
   });
   
+  
+  useEffect(()=>{
+    if(isAuthenticated){
+      route.push('/disciplines')
+    }
+  },[isAuthenticated, route])
+
 
   const onSubmit = data =>{ 
     dispatch(userLogin(data.email, data.password))
     console.log(data.email, data.password);
-    route.push('/disciplines')
+   
   }
-
-
-  let promise = new Promise((resolve, reject) =>{
-
-    let a = 1+1;
-    if (a === "2"){
-      resolve("Yeah!")
-    }else{
-      reject("Nah!..")
-    }
-  })
-
-  useEffect(()=>{
-
-    promise.then(msg => console.log(msg)).catch(err => console.log(err))
-
-  ,[]})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <div className='flexAll'>

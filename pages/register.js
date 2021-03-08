@@ -13,10 +13,11 @@ import "yup-phone";
 import Image from 'next/image'
 import classNames from 'classnames'
 import styles from '../styles/index.module.css'
+import Alert from '@material-ui/lab/Alert';
 
 import {  facultyOptions, directionOptions, groupOptions } from '../data/options'
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { userRegister } from '../Redux/Auth/AuthActions'
 
 
@@ -45,6 +46,15 @@ export default function Register() {
     const { register, handleSubmit, errors, control  } = useForm({
       resolver: yupResolver(validationSchema)
     });
+    const { isAuthenticated, error } = useSelector(state => state.auth)
+
+    useEffect(()=>{
+      if(isAuthenticated){
+        route.push('/disciplines')
+      }
+    },[isAuthenticated, route])
+  
+
 
     const onSubmit = data =>{ 
       const value ={
@@ -61,14 +71,12 @@ export default function Register() {
       }
    
       dispatch(userRegister(value))
-      route.push('/disciplines')
-
     }
   
   return (
-    <div className='flexAll'>
-        <div className={classNames(styles.loginForm, 'flex_col')}>
-            <h1 className='main_title'>Welcome to CourseBook </h1>
+    <div className='flexAll' style={{height: "auto"}}>
+        <div className={classNames(styles.loginForm, 'flex_col')} >
+            <h1 className='main_title' >Welcome to CourseBook </h1>
             <form  style={{width: '70%'}}  onSubmit={handleSubmit(onSubmit)}>
             <Controller
               name="name"
@@ -89,21 +97,21 @@ export default function Register() {
                 control={control}
                 defaultValue=""
                 render={({ onChange, value  }) => 
-                  <FormInput placeholder='Phone Number'   error={errors.password?.message} onChange={onChange} value={value} />}
+                  <FormInput placeholder='Phone Number'   error={errors.phone?.message} onChange={onChange} value={value} />}
               />
               <Controller
                 name="dob"
                 control={control}
                 defaultValue=""
                 render={({ onChange, value  }) => 
-                  <FormInput placeholder='Date of Birth ( mm.dd.yyy)'  error={errors.password?.message} onChange={onChange} value={value} />}
+                  <FormInput placeholder='Date of Birth ( mm.dd.yyy)'  error={errors.dob?.message} onChange={onChange} value={value} />}
               />
               <Controller
                 name="admissionYear"
                 control={control}
                 defaultValue=""
                 render={({ onChange, value  }) => 
-                  <FormInput placeholder='Admission Year'   error={errors.password?.message} onChange={onChange} value={value} />}
+                  <FormInput placeholder='Admission Year'   error={errors.admissionYear?.message} onChange={onChange} value={value} />}
               />
               <Controller
                 name="password"
@@ -146,7 +154,7 @@ export default function Register() {
                   />
                   </>
                 }
-
+                {error && <Alert severity="error">{error}</Alert>}
               <div className='flex_center' style={{margin: '2rem'}}>
                   <button  style={{width: '70%'}} type='submit' className='btn_primary'> Register</button>
               </div>

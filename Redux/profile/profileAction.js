@@ -54,7 +54,7 @@ export const getAvatar = () => async (dispatch, getState) =>{
 
       const config = {
         headers: {
-          'Content-Type': "image/*",
+          'Accept': "*/*",
           Authorization: `Bearer ${currentUser.token}`,
         },
       }

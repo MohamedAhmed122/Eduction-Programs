@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import { Card, Typography } from "@material-ui/core";
 import BackupIcon from '@material-ui/icons/Backup';
 
-
+import Alert from '@material-ui/lab/Alert';
 import styles from '../../styles/profile.module.css'
 import {  useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../Redux/profile/profileAction";
@@ -19,25 +19,31 @@ import { updateProfile } from "../../Redux/profile/profileAction";
 const today = new Date()
 
 const validationSchema = Yup.object({
-    // name: Yup.string().required()
-    //     .label('Name').min(4, 'Invalid Name'),
-    // dob:Yup.date().transform(parseDateString)
-    // .max(today, "Invalid Date of birth"),
-    // phone: Yup.string()
-    // .phone("RU", true, 'Number is invalid')
-    // .required(), 
-    // email: Yup.string().email().required().label('Email'), 
-    // admissionYear: Yup.number().required(),
+    name: Yup.string().required()
+        .label('Name').min(4, 'Invalid Name'),
+    phone: Yup.string()
+    .phone("RU", true, 'Number is invalid')
+    .required(), 
+    admissionYear: Yup.number().required().min(3),
 });
+
+const validationSchemaEmail = Yup.object({
+    email: Yup.string().email().required().label('Email'),
+});
+
 
 
 export default function account() {
 
     const {profile, loading} = useSelector(state => state.profile)
+    const { error } = useSelector(state => state.updateProfile)
     const dispatch = useDispatch()
     
     const {  handleSubmit, errors, control  } = useForm({
         resolver: yupResolver(validationSchema)
+    });
+    const {  handleSubmit : handleSubmitEmail, errors : emailError, control : controlEmail  } = useForm({
+        resolver: yupResolver(validationSchemaEmail)
     });
   
     
@@ -47,10 +53,10 @@ export default function account() {
             fullName : data.name,
             admissionYear : data.admissionYear,
             birthday : data.dob,
-            email : data.email
         }))
     }
 
+    const onSubmitEmail = data => console.log(data);
     
    
    
@@ -75,13 +81,6 @@ export default function account() {
                     render={({ onChange, value  }) => 
                         <FormInput  placeholder='Name'  error={errors.name?.message} onChange={onChange} value={value} />}
                     />
-                    <Controller
-                    name="email"
-                    control={control}
-                    defaultValue={profile.email}
-                    render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Email'  error={errors.email?.message} onChange={onChange} value={value} />}
-                    />
                      <Controller
                     name="admissionYear"
                     control={control}
@@ -103,12 +102,27 @@ export default function account() {
                     render={({ onChange, value  }) => 
                         <FormInput placeholder='Phone Number'  error={errors.phone?.message} onChange={onChange} value={value} />}
                     />
+                    {error &&  <Alert severity="error">{error}</Alert> }
                     <div className='flex_center' style={{margin: '2rem'}}>
                         <button  style={{width: '70%'}} type='submit' className='btn_primary'> Update</button>
                     </div>
                 </form>
             </Card>
-            
+            <Card className={styles.card}>
+                <Typography variant='h4'>Change Email</Typography>
+                <form  style={{width: '70%', marginTop: 30}}  onSubmit={handleSubmitEmail(onSubmitEmail)}>
+                    <Controller
+                    name="email"
+                    control={controlEmail}
+                    defaultValue={profile.email}
+                    render={({ onChange, value  }) => 
+                        <FormInput  placeholder='Email'  error={emailError.email?.message} onChange={onChange} value={value} />}
+                    />
+                    <div className='flex_center' style={{margin: '2rem'}}>
+                        <button  style={{width: '70%'}} type='submit' className='btn_primary'> Update Email</button>
+                    </div>
+                </form>
+            </Card>        
         </div>
     )
 }

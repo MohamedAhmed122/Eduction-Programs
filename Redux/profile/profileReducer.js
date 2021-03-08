@@ -54,7 +54,7 @@ export const getAvatarReducer = (state = initialState, { type, payload}) =>{
             return{
                 // ...state, 
                 loading: false,
-                profile: payload,
+                avatar: payload,
              
             }
         case GET_AVATAR_ERROR:
