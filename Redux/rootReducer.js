@@ -8,7 +8,8 @@ import AuthReducer from './Auth/AuthReducer'
 import { 
   getProfileReducer,  
   getAvatarReducer, 
-  updateProfileReducer
+  updateProfileReducer, 
+  uploadAvatarReducer
 } from './profile/profileReducer'
 
 const persistConfig = {
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   auth : AuthReducer,
   profile: getProfileReducer,
   avatar : getAvatarReducer,
-  updateProfile : updateProfileReducer
+  updateProfile : updateProfileReducer,
+  uploadAvatar : uploadAvatarReducer
 
 })
 

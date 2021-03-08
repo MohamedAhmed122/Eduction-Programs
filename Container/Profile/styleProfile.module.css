@@ -20,3 +20,22 @@
     color: #027373;
     margin-right: 20px;
 }
+
+.btn{
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    margin: 30px 0px;
+    box-shadow: 0px 4px 15px -5px #707070;
+    border-radius: 10px;
+    border: 1px dashed #707070;
+}
+
+.uploadBtn{
+    margin-left: 70px;
+    padding: 1px;
+    color: white !important;
+    background-color: rgb(40, 214, 40);
+    border-radius: 50%;
+
+}

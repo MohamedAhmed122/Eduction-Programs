@@ -2,7 +2,7 @@ import{ useEffect } from 'react';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from "redux-persist/integration/react";
-import axios from 'axios';
+
 
 import { useRouter } from 'next/router'
 import { SnackbarProvider } from "notistack";

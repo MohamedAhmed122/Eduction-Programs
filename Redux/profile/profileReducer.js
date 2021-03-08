@@ -7,7 +7,10 @@ import {
     GET_AVATAR_ERROR,
     UPDATE_USER_PROFILE_REQUEST,
     UPDATE_USER_PROFILE_SUCCESS,
-    UPDATE_USER_PROFILE_ERROR
+    UPDATE_USER_PROFILE_ERROR,
+    UPLOAD_AVATAR_REQUEST, 
+    UPLOAD_AVATAR_SUCCESS, 
+    UPLOAD_AVATAR_ERROR
   } from './profileTypes'
 
 const initialState ={
@@ -16,6 +19,7 @@ const initialState ={
     profile: null,
     avatar: null, 
     success: false,
+    file: null
 }
 
 export const getProfileReducer = (state = initialState, { type, payload}) =>{
@@ -87,6 +91,28 @@ export const updateProfileReducer = (state = initialState, { type, payload}) =>{
         default: return state
     }
 }
+
+export const uploadAvatarReducer = (state = initialState, { type, payload}) =>{
+    switch(type){
+        case UPLOAD_AVATAR_REQUEST:
+            return{
+                loading: true
+            }
+        case UPLOAD_AVATAR_SUCCESS:
+            return{
+                loading: false,
+                file:  payload
+            }
+        case UPLOAD_AVATAR_ERROR:
+            return{
+                loading: false,
+                error: payload
+            }
+        default: return state
+    }
+}
+
+
 
 
 

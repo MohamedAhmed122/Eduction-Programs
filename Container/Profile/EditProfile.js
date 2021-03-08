@@ -12,6 +12,7 @@ import BackupIcon from '@material-ui/icons/Backup';
 import styles from '../../styles/profile.module.css'
 import {  useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../Redux/profile/profileAction";
+import UploadPhoto from "./UploadPhoto";
 
 
 
@@ -37,7 +38,7 @@ export default function account() {
     const {profile, loading} = useSelector(state => state.profile)
     const { error } = useSelector(state => state.updateProfile)
     const dispatch = useDispatch()
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar,  } = useSnackbar();
     
     const {  handleSubmit, errors, control  } = useForm({
         resolver: yupResolver(validationSchema)
@@ -74,10 +75,11 @@ export default function account() {
         <div style={{marginTop:'5rem'}} className='flex_col'>
             <Typography variant='h4'>Update Profile</Typography>
             <Card className={styles.card}>
-                <div className={classNames(styles.image, 'flex_col')}>
+                {/* <div className={classNames(styles.image, 'flex_col')}>
                     <BackupIcon fontSize='large'/>
                     <p className={styles.smallText}>drag and drop image here</p>
-                </div>
+                </div> */}
+                <UploadPhoto />
                 <form  style={{width: '70%', marginTop: 30}}  onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                     name="name"
@@ -102,7 +104,7 @@ export default function account() {
                     />
                     <Controller
                     name="phone"
-                    defaultValue={profile.phone}
+                    defaultValue={""}
                     control={control}
                     render={({ onChange, value  }) => 
                         <FormInput placeholder='Phone Number'  error={errors.phone?.message} onChange={onChange} value={value} />}
