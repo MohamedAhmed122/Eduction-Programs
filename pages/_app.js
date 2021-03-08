@@ -19,10 +19,7 @@ function MyApp({ Component, pageProps }) {
   const { pathname } = useRouter()
   const inverted = (pathname === '/register' || pathname === '/' ) ? true : false
 
-  useEffect(() => {
-    axios.defaults.baseURL = 'http://localhost:5000';
-
-  }, []);
+ 
 
   return( 
     <>

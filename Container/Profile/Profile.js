@@ -1,15 +1,22 @@
 import { Card } from "@material-ui/core";
-import { useSelector } from "react-redux";
-
+import { useEffect } from 'react'
+import {  useSelector, useDispatch } from "react-redux";
+import  {getProfile } from '../../Redux/profile/profileAction'
 import styles from './styleProfile.module.css'
-
+import Loading from '../../Components/Loading/Loading'
 export default function Profile() {
 
     const img ='https://www.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg'
 
     const { profile, loading } = useSelector(state => state.profile)
 
-    if (loading) return <div>loading ...</div>
+
+   
+
+
+
+
+    if (loading) return <Loading />
 
     return (
         <div>

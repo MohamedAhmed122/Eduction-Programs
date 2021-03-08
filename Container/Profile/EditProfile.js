@@ -11,7 +11,8 @@ import BackupIcon from '@material-ui/icons/Backup';
 
 
 import styles from '../../styles/profile.module.css'
-import {  useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
+
 
 
 const today = new Date()
@@ -23,25 +24,27 @@ const validationSchema = Yup.object({
     .max(today, "Invalid Date of birth"),
     phone: Yup.string()
     .phone("RU", true, 'Number is invalid')
-    .required(),  
+    .required(), 
+    email: Yup.string().email().required().label('Email'), 
+    admissionYear: Yup.number().required(),
 });
-const validationSchemaEmail = Yup.object({
-    email: Yup.string().email().required().label('Email'),
-});
+
 
 export default function account() {
 
     const {profile, loading} = useSelector(state => state.profile)
+    const dispatch = useDispatch()
     
     const {  handleSubmit, errors, control  } = useForm({
         resolver: yupResolver(validationSchema)
     });
-    const {  handleSubmit : handleSubmitEmail, errors : emailError, control : controlEmail  } = useForm({
-        resolver: yupResolver(validationSchemaEmail)
-    });
+  
     
-    const onSubmit = data => console.log(data);
-    const onSubmitEmail = data => console.log(data);
+    const onSubmit = data =>{
+         console.log(data);
+       
+    }
+
     
    
    
@@ -66,12 +69,19 @@ export default function account() {
                     render={({ onChange, value  }) => 
                         <FormInput  placeholder='Name'  error={errors.name?.message} onChange={onChange} value={value} />}
                     />
+                    <Controller
+                    name="email"
+                    control={control}
+                    defaultValue={profile.email}
+                    render={({ onChange, value  }) => 
+                        <FormInput  placeholder='Email'  error={errors.email?.message} onChange={onChange} value={value} />}
+                    />
                      <Controller
                     name="admissionYear"
                     control={control}
                     defaultValue={profile.admissionYear}
                     render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Admission Year'  error={errors.name?.message} onChange={onChange} value={value} />}
+                        <FormInput  placeholder='Admission Year'  error={errors.admissionYear?.message} onChange={onChange} value={value} />}
                     />
                     <Controller
                     name="dob"
@@ -92,21 +102,7 @@ export default function account() {
                     </div>
                 </form>
             </Card>
-            <Card className={styles.card}>
-                <Typography variant='h4'>Change Email</Typography>
-                <form  style={{width: '70%', marginTop: 30}}  onSubmit={handleSubmitEmail(onSubmitEmail)}>
-                    <Controller
-                    name="email"
-                    control={controlEmail}
-                    defaultValue={profile.email}
-                    render={({ onChange, value  }) => 
-                        <FormInput  placeholder='Email'  error={emailError.email?.message} onChange={onChange} value={value} />}
-                    />
-                    <div className='flex_center' style={{margin: '2rem'}}>
-                        <button  style={{width: '70%'}} type='submit' className='btn_primary'> Update Email</button>
-                    </div>
-                </form>
-            </Card>        
+            
         </div>
     )
 }
