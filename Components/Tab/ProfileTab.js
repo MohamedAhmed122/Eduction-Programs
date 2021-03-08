@@ -7,7 +7,7 @@ import style from './styleTab.module.css'
 export default function DisciplineTab() {
 
 
-    const [ activeTab, setActiveTab ] = useState(0)
+    const [ activeTab, setActiveTab ] = useState(1)
 
 
     return (

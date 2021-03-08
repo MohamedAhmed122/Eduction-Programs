@@ -2,21 +2,20 @@ import { useForm,Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import FormInput from "../../Components/Form/FormInput";
-import { parseDateString } from '../../utils/Validate'
+import { useSnackbar } from 'notistack';
 import "yup-phone";
 
 import classNames from 'classnames'
 import { Card, Typography } from "@material-ui/core";
 import BackupIcon from '@material-ui/icons/Backup';
 
-import Alert from '@material-ui/lab/Alert';
 import styles from '../../styles/profile.module.css'
 import {  useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../Redux/profile/profileAction";
 
 
 
-const today = new Date()
+
 
 const validationSchema = Yup.object({
     name: Yup.string().required()
@@ -38,6 +37,7 @@ export default function account() {
     const {profile, loading} = useSelector(state => state.profile)
     const { error } = useSelector(state => state.updateProfile)
     const dispatch = useDispatch()
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     
     const {  handleSubmit, errors, control  } = useForm({
         resolver: yupResolver(validationSchema)
@@ -54,6 +54,11 @@ export default function account() {
             admissionYear : data.admissionYear,
             birthday : data.dob,
         }))
+        if (error){
+            enqueueSnackbar(`Oops,${error} `,{variant : 'error'} );
+        }else{
+            enqueueSnackbar('Success, Profile has been Updated',{variant : 'success'} );
+        }
     }
 
     const onSubmitEmail = data => console.log(data);
@@ -102,7 +107,6 @@ export default function account() {
                     render={({ onChange, value  }) => 
                         <FormInput placeholder='Phone Number'  error={errors.phone?.message} onChange={onChange} value={value} />}
                     />
-                    {error &&  <Alert severity="error">{error}</Alert> }
                     <div className='flex_center' style={{margin: '2rem'}}>
                         <button  style={{width: '70%'}} type='submit' className='btn_primary'> Update</button>
                     </div>

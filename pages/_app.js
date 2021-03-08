@@ -5,7 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import axios from 'axios';
 
 import { useRouter } from 'next/router'
-
+import { SnackbarProvider } from "notistack";
 import { store, persistor } from '../Redux/store'
 
 import Navbar from '../Layouts/Navbar/Nav'
@@ -25,9 +25,11 @@ function MyApp({ Component, pageProps }) {
     <>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Navbar inverted={inverted} />
-        <Component {...pageProps} />
-        <Footer inverted={!inverted} />
+        <SnackbarProvider> 
+          <Navbar inverted={inverted} />
+          <Component {...pageProps} />
+          <Footer inverted={!inverted} />
+        </SnackbarProvider>
       </PersistGate>
     </Provider>
     </>
