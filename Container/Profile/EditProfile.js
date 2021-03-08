@@ -12,21 +12,22 @@ import BackupIcon from '@material-ui/icons/Backup';
 
 import styles from '../../styles/profile.module.css'
 import {  useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../../Redux/profile/profileAction";
 
 
 
 const today = new Date()
 
 const validationSchema = Yup.object({
-    name: Yup.string().required()
-        .label('Name').min(4, 'Invalid Name'),
-    dob:Yup.date().transform(parseDateString)
-    .max(today, "Invalid Date of birth"),
-    phone: Yup.string()
-    .phone("RU", true, 'Number is invalid')
-    .required(), 
-    email: Yup.string().email().required().label('Email'), 
-    admissionYear: Yup.number().required(),
+    // name: Yup.string().required()
+    //     .label('Name').min(4, 'Invalid Name'),
+    // dob:Yup.date().transform(parseDateString)
+    // .max(today, "Invalid Date of birth"),
+    // phone: Yup.string()
+    // .phone("RU", true, 'Number is invalid')
+    // .required(), 
+    // email: Yup.string().email().required().label('Email'), 
+    // admissionYear: Yup.number().required(),
 });
 
 
@@ -42,7 +43,12 @@ export default function account() {
     
     const onSubmit = data =>{
          console.log(data);
-       
+        dispatch(updateProfile({
+            fullName : data.name,
+            admissionYear : data.admissionYear,
+            birthday : data.dob,
+            email : data.email
+        }))
     }
 
     
