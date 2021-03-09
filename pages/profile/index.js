@@ -20,7 +20,7 @@ import { getAvatar, getProfile } from '../../Redux/profile/profileAction'
         dispatch(getProfile())
         // dispatch(getAvatar())
       }
-    },[isAuthenticated, route])
+    },[isAuthenticated, route, success])
     // useEffect(()=>{
        
     // },[dispatch, success])

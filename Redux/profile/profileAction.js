@@ -116,33 +116,33 @@ export const updateProfile = (value) => async(dispatch, getState) =>{
 
 
 export const updateAvatar = (file) => async(dispatch, getState) =>{
-    
-  try {
+
       dispatch({ type: UPLOAD_AVATAR_REQUEST});
   
      
       const {auth :{ currentUser }} = getState()
 
+      const formData = new FormData();
+        formData.append('myImage',file);
 
       const config = {
         headers: {
           'Content-Type': "multipart/form-data",
+           "Accept" : "*/*",
           Authorization: `Bearer ${currentUser.token}`,
         },
       }
-    
-      const { data } = await 
-      axios.post('http://localhost:5000/Profiles/upload-avatar', {file}, config )
+  
+      axios.post('http://localhost:5000/Profiles/upload-avatar', file , config ).then(res =>{
+        console.log(res)
+        dispatch({type: UPLOAD_AVATAR_SUCCESS, payload: data})
+      }).catch(error =>{
+        dispatch({
+            type: UPLOAD_AVATAR_ERROR,
+            payload: error.response &&
+             error.response.data.message ? error.response.data.message : error.message
+        })
 
-    
-      dispatch({type: UPLOAD_AVATAR_SUCCESS, payload: data})
-      
-  } catch (error) {
-      dispatch({
-          type: UPLOAD_AVATAR_ERROR,
-          payload: error.response &&
-           error.response.data.message ? error.response.data.message : error.message
       })
-  }
 }
 

@@ -11,11 +11,13 @@ export default function Profile() {
 
     if (loading) return <Loading />
 
+    const src ='https://simg.nicepng.com/png/small/128-1280406_view-user-icon-png-user-circle-icon-png.png'
+
     return (
         <div>
             <Card className={styles.card}>
                 <div className='flex_col'>
-                    <img className={styles.img} src={profile.avatar} alt='Img'/>
+                    <img className={styles.img} src={src} alt='Img'/>
                 </div>
                 <div className='flex' style={{marginTop: 20}}>
                     <h3 className={styles.mainText}>Name:</h3>

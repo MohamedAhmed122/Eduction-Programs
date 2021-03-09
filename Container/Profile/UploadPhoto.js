@@ -27,10 +27,7 @@ function UploadPhoto() {
       }, [image]);
 
       const handleClick = () =>{
-
-          console.log(image)
-          
-        //   dispatch(updateAvatar(file))
+          dispatch(updateAvatar(image.name))
       }
 
     return(
@@ -63,7 +60,7 @@ function UploadPhoto() {
           ref={fileInputRef}
           accept="image/*"
           onChange={(event) => {
-            const file = event.target;
+            const file = event.target.files[0];
             if (file ) {
               setImage(file);
             } else {
@@ -73,7 +70,7 @@ function UploadPhoto() {
         />
       </form>
       <button className={styles.uploadBtn}>
-         <IconButton onClick={handleClick}>
+         <IconButton onClick={()=>handleClick()}>
              <CheckCircleIcon fontSize='large' style={{color: 'white'}} />
          </IconButton>
       </button>
