@@ -19,7 +19,7 @@ export default function AdminManageDirections() {
     return (
         <>
         <div style={{marginTop:120}} className='flex_center'>
-            <Button variant='outlined'>Create New</Button>
+            <Button variant='outlined' onClick={()=>route.push('/admin/createNew/group')}>Create New</Button>
         </div>
         <div style={{marginLeft: '10%', marginTop: '4rem', width:'80%', marginBottom: '4rem'}}>
             <TableContainer component={Paper}>
