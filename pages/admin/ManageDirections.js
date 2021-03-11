@@ -1,5 +1,4 @@
-import Sidebar from "../../Layouts/Sidebar/Sidebar";
-import SidebarRow from "../../Layouts/Sidebar/SidebarRow";
+
 import { users } from '../../data/data'
 import { useRouter } from 'next/router'
 import { 
@@ -12,9 +11,7 @@ import {
     TableHead, 
     TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 

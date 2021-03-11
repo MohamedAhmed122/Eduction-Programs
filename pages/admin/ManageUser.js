@@ -30,7 +30,7 @@ export default function AdminManageUser() {
             <Sidebar>
                 <SidebarRow Icon={AccountCircleIcon} title='Users' />
                 <SidebarRow Icon={LibraryBooksIcon} title='Disciplines' onClick={()=>route.push('/admin/ManageDisciplines')} />
-                <SidebarRow Icon={AccountBalanceIcon} title='Faculty' />
+                <SidebarRow Icon={AccountBalanceIcon} title='Faculty'onClick={()=>route.push('/admin/ManageFaculty')} />
                 <SidebarRow Icon={OpenWithIcon} title='Direction' onClick={()=>route.push('/admin/ManageDirections')} />
                 <SidebarRow Icon={GroupIcon} title='Group' />
 
