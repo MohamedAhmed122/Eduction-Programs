@@ -9,7 +9,6 @@ import {
   getProfileReducer,  
   getAvatarReducer, 
   updateProfileReducer, 
-  uploadAvatarReducer
 } from './profile/profileReducer'
 
 const persistConfig = {
@@ -24,7 +23,7 @@ const rootReducer = combineReducers({
   profile: getProfileReducer,
   avatar : getAvatarReducer,
   updateProfile : updateProfileReducer,
-  uploadAvatar : uploadAvatarReducer
+
 
 })
 

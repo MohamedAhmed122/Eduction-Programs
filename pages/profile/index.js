@@ -18,7 +18,7 @@ import { getAvatar, getProfile } from '../../Redux/profile/profileAction'
         route.push('/')
       }else{
         dispatch(getProfile())
-        // dispatch(getAvatar())
+        dispatch(getAvatar())
       }
     },[isAuthenticated, route, success])
     // useEffect(()=>{
@@ -28,6 +28,7 @@ import { getAvatar, getProfile } from '../../Redux/profile/profileAction'
     // useEffect(()=>{
       
     // },[dispatch])
+    console.log(avatar)
 
 
     if (loading || updateProfileLoading || !profile ) return <Loading />

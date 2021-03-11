@@ -9,9 +9,7 @@ import {
   UPDATE_USER_PROFILE_REQUEST,
   UPDATE_USER_PROFILE_SUCCESS,
   UPDATE_USER_PROFILE_ERROR,
-  UPLOAD_AVATAR_REQUEST, 
-  UPLOAD_AVATAR_SUCCESS, 
-  UPLOAD_AVATAR_ERROR
+
 } from './profileTypes'
 
 
@@ -62,7 +60,7 @@ export const getAvatar = () => async (dispatch, getState) =>{
         },
       }
 
-      const { data } = await axios.get('http://localhost:5000/Profiles/get-avatar', config)
+      const { data } = await axios.get(`http://localhost:5000/Profiles/get-avatar/${currentUser.id}`, config)
       console.log(data)
       dispatch({type: GET_AVATAR_SUCCESS, payload: data})
 
@@ -113,36 +111,4 @@ export const updateProfile = (value) => async(dispatch, getState) =>{
 }
 
 
-
-
-export const updateAvatar = (file) => async(dispatch, getState) =>{
-
-      dispatch({ type: UPLOAD_AVATAR_REQUEST});
-  
-     
-      const {auth :{ currentUser }} = getState()
-
-      const formData = new FormData();
-        formData.append('myImage',file);
-
-      const config = {
-        headers: {
-          'Content-Type': "multipart/form-data",
-           "Accept" : "*/*",
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      }
-  
-      axios.post('http://localhost:5000/Profiles/upload-avatar', file , config ).then(res =>{
-        console.log(res)
-        dispatch({type: UPLOAD_AVATAR_SUCCESS, payload: data})
-      }).catch(error =>{
-        dispatch({
-            type: UPLOAD_AVATAR_ERROR,
-            payload: error.response &&
-             error.response.data.message ? error.response.data.message : error.message
-        })
-
-      })
-}
 

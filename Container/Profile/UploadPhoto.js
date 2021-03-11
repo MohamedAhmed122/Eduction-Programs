@@ -48,8 +48,6 @@ function UploadPhoto() {
             console.log(error)
             enqueueSnackbar('Oops, Sorry try again :)',{variant : 'error'} );
           })
-
-       
       }
 
     return(
@@ -91,11 +89,12 @@ function UploadPhoto() {
           }}
         />
       </form>
+      {
       <button className={styles.uploadBtn}>
          <IconButton onClick={()=>handleClick()}>
              <CheckCircleIcon fontSize='large' style={{color: 'white'}} />
          </IconButton>
-      </button>
+      </button>}
     </div>
 
     )
