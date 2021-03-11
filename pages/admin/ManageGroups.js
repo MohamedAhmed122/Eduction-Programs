@@ -43,7 +43,7 @@ export default function AdminManageDirections() {
                             <TableCell align="right">
                                 <ButtonGroup variant="contained">
                                     <Button 
-                                    onClick={()=> route.push(`/account`)}
+                                    onClick={()=> route.push(`/admin/edit/group/${users.id}`)}
                                     style={{color: 'black'}}>
                                         <EditIcon />
                                     </Button>

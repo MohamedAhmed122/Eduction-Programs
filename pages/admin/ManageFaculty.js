@@ -42,7 +42,7 @@ export default function AdminManageFaculty() {
                             <TableCell align="center">
                                 <ButtonGroup variant="contained">
                                     <Button 
-                                    onClick={()=> route.push(`/account`)}
+                                    onClick={()=> route.push(`/admin/edit/faculty/${users.id}`)}
                                     style={{color: 'black'}}>
                                         <EditIcon />
                                     </Button>
