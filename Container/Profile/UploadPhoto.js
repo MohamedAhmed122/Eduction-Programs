@@ -3,16 +3,18 @@ import styles from './styleProfile.module.css'
 import classNames from 'classnames'
 import BackupIcon from '@material-ui/icons/Backup';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
 import { IconButton } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import {updateAvatar} from '../../Redux/profile/profileAction'
+import axios from 'axios'
+import { useSelector } from 'react-redux';
 
 function UploadPhoto() {
     const [image, setImage] = useState();
     const [preview, setPreview] = useState();
-    const dispatch = useDispatch()
+    const {currentUser} = useSelector(state => state.auth)
     const fileInputRef = useRef();
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         if (image) {
@@ -27,7 +29,27 @@ function UploadPhoto() {
       }, [image]);
 
       const handleClick = () =>{
-          dispatch(updateAvatar(image.name))
+        const fd = new FormData();
+
+        const config = {
+          headers: {
+            'Content-Type': "multipart/form-data",
+             "Accept" : "*/*",
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+        fd.append('file', image, image.name);
+        axios.post('http://localhost:5000/Profiles/upload-avatar', fd, config)
+          .then(res =>{
+            console.log(res)
+            enqueueSnackbar('Success, Photo has been Uploaded',{variant : 'success'} );
+          })
+          .catch(error =>{
+            console.log(error)
+            enqueueSnackbar('Oops, Sorry try again :)',{variant : 'error'} );
+          })
+
+       
       }
 
     return(

@@ -5,10 +5,8 @@ import FormInput from "../../Components/Form/FormInput";
 import { useSnackbar } from 'notistack';
 import "yup-phone";
 
-import classNames from 'classnames'
-import { Card, Typography } from "@material-ui/core";
-import BackupIcon from '@material-ui/icons/Backup';
 
+import { Card, Typography } from "@material-ui/core";
 import styles from '../../styles/profile.module.css'
 import {  useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../Redux/profile/profileAction";
