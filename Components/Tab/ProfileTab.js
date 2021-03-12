@@ -18,9 +18,8 @@ export default function DisciplineTab() {
                 <li onClick={()=>setActiveTab(1)} className={activeTab === 1 ? style.current: null } >Update Profile </li>
             </ul>
             <div> 
-                {activeTab ===0 &&      <Profile />}
+                {activeTab === 0 &&     <Profile />}
                 {activeTab === 1 &&     <EditProfile />}
-             
             </div>
         </div>
     )

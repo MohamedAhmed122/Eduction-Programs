@@ -19,7 +19,7 @@ export default function DisciplineTab() {
                 <li onClick={()=>setActiveTab(2)} className={activeTab === 2 ? style.current: null } >Teacher Subjects</li>
             </ul>
             <div> 
-                {activeTab ===0 &&      <SpringSemester />}
+                {activeTab === 0 &&      <SpringSemester />}
                 {activeTab === 1 &&     <AutumnSemester />}
                 {activeTab === 2 &&     <TeacherSubjects />}
             </div>

@@ -39,6 +39,7 @@
     bottom: 0px;
     background-color: #027373;
     color: white !important;
+    /* z-index: 1000; */
 }
 .footerLinks{
   margin-bottom: auto;
