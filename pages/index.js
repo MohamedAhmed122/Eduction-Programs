@@ -64,7 +64,7 @@ export default function Home() {
                   <FormInput placeholder='Password' type='password'  error={errors.password?.message} onChange={onChange} value={value} />}
               />
               <div className='flex_center' style={{marginTop: '2rem'}}>
-                  <button style={{width: '70%', margin: '2rem'}} type='submit' className='btn_primary'> Login</button>
+                  <button  type='submit' className={classNames( 'btn_primary', styles.loginBtn )}> Login</button>
               </div>
               <h4 className='text_align'>you don't have account! 
                   <span onClick={()=> route.push('/register')} className='span_color'>Register</span>

@@ -1,9 +1,24 @@
-.loginSvgContainer{
+.loginSvgContainer {
   flex: 0.5;
   background-color: #d0ecec;
- min-height: 140vh;
+  min-height: 140vh;
   height: auto;
 }
-.loginForm{
+.loginForm {
   flex: 0.5;
+}
+
+.loginBtn {
+  width: 400px;
+  margin: 2rem;
+}
+
+@media (max-width: 500px) {
+  .loginBtn {
+    width: 100px;
+    margin: 2rem;
+  }
+  .loginSvgContainer {
+    display: none;
+  }
 }
