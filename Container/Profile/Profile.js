@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import {  useSelector } from "react-redux";
 import styles from './styleProfile.module.css'
 import Loading from '../../Components/Loading/Loading'
+import { baseURL } from "../../Redux/config";
 
 
 export default function Profile() {
@@ -19,7 +20,7 @@ export default function Profile() {
             <Card className={styles.card}>
                 <div className='flex_col'>
                     {/* <img className={styles.img} src={src} alt='Img'/> */}
-                    <img className={styles.img} src={`http://localhost:5000/Profiles/get-avatar/${currentUser.id}`} />
+                    <img className={styles.img} src={`${baseURL}Profiles/get-avatar/${currentUser.id}`} />
                 </div>
                 <div className='flex' style={{marginTop: 20}}>
                     <h3 className={styles.mainText}>Name:</h3>

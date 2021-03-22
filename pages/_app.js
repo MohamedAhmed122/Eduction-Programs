@@ -26,9 +26,9 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SnackbarProvider> 
-          {/* <Navbar inverted={inverted} /> */}
+          <Navbar inverted={inverted} />
           <Component {...pageProps} />
-          {/* <Footer inverted={!inverted} /> */}
+          <Footer inverted={!inverted} />
         </SnackbarProvider>
       </PersistGate>
     </Provider>

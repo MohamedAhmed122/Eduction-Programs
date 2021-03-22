@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { IconButton } from '@material-ui/core';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
+import { baseURL } from '../../Redux/config';
 
 function UploadPhoto() {
     const [image, setImage] = useState();
@@ -39,7 +40,7 @@ function UploadPhoto() {
           },
         }
         fd.append('file', image, image.name);
-        axios.post('http://localhost:5000/Profiles/upload-avatar', fd, config)
+        axios.post(`${baseURL}Profiles/upload-avatar`, fd, config)
           .then(res =>{
             console.log(res)
             enqueueSnackbar('Success, Photo has been Uploaded',{variant : 'success'} );

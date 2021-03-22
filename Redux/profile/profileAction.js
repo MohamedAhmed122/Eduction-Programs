@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { baseURL } from '../config';
 import {
   GET_USER_PROFILE_ERROR, 
   GET_USER_PROFILE_REQUEST, 
@@ -28,7 +29,7 @@ export const getProfile = () => async (dispatch, getState) =>{
           },
         }
 
-        const { data } = await axios.get('http://localhost:5000/Profiles', config)
+        const { data } = await axios.get(`${baseURL}Profiles`, config)
         console.log(data)
         dispatch({type: GET_USER_PROFILE_SUCCESS, payload: data})
 
@@ -60,7 +61,7 @@ export const getAvatar = () => async (dispatch, getState) =>{
         },
       }
 
-      const { data } = await axios.get(`http://localhost:5000/Profiles/get-avatar/${currentUser.id}`, config)
+      const { data } = await axios.get(`${baseURL}Profiles/get-avatar/${currentUser.id}`, config)
       console.log(data)
       dispatch({type: GET_AVATAR_SUCCESS, payload: data})
 
@@ -96,7 +97,7 @@ export const updateProfile = (value) => async(dispatch, getState) =>{
       }
     
       const { data } = await 
-      axios.post('http://localhost:5000/Profiles/update', (value), config )
+      axios.post(`${baseURL}Profiles/update`, (value), config )
 
     
       dispatch({type: UPDATE_USER_PROFILE_SUCCESS, payload: data})
