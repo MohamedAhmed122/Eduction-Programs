@@ -1,22 +1,22 @@
 import axios from "axios";
 import { baseUrl, config } from "./config";
 
-export const fetchFaculties = async (token) => {
-  const { data } = await axios.get(`${baseUrl}Faculties`, config(token));
+export const fetchFaculties = async () => {
+  const { data } = await axios.get(`${baseUrl}Faculties`, config());
 
   return data;
 };
 
 
-export const fetchFacultyById = async (token, id) => {
-    const { data } = await axios.get(`${baseUrl}Faculties/${id}`, config(token));
+export const fetchFacultyById = async ( id) => {
+    const { data } = await axios.get(`${baseUrl}Faculties/${id}`, config());
   
     return data;
  };
   
 
- export const fetchDirectionFromFaculty = async (token, id) => {
-  const { data } = await axios.get(`${baseUrl}Faculties/${id}/directions`, config(token));
+ export const fetchDirectionFromFaculty = async (id) => {
+  const { data } = await axios.get(`${baseUrl}Faculties/${id}/directions`, config());
 
   return data;
 };

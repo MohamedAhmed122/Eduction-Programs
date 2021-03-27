@@ -14,8 +14,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchFacultyById } from "../../../../Requests/faculties";
 import Loading from "../../../../Components/Loading/Loading";
+import { getDirectionById } from "../../../../Requests/directions";
 
 export default function FacultyView() {
   const {
@@ -23,19 +23,19 @@ export default function FacultyView() {
   } = useRouter();
   const route = useRouter();
   const { currentUser } = useSelector((state) => state.auth);
-  const [faculty, setFaculty] = useState();
+  const [direction, setDirections] = useState();
 
   useEffect(() => {
     if (id) {
-      fetchFacultyById(currentUser.token, id)
-        .then((res) => setFaculty(res))
+      getDirectionById(currentUser.token, id)
+        .then((res) => setDirections(res))
         .catch((err) => console.log(err));
     }
   }, [id]);
 
-  console.log(faculty);
+  console.log(direction);
 
-  if (!faculty) return <Loading />;
+  if (!direction) return <Loading />;
 
   return (
     <div
@@ -43,11 +43,16 @@ export default function FacultyView() {
         marginLeft: "10%",
         marginTop: "10rem",
         width: "80%",
-        marginBottom: "13rem",
+        marginBottom: "43rem",
       }}
     >
-      <h1 className='main_title' style={{textAlign: 'center'}}>{faculty.name}</h1>
-      <TableContainer component={Paper}>
+      <h1 className="main_title" style={{ textAlign: "center" }}>
+        {direction.name}
+      </h1>
+      <p style={{ textAlign: "center" }}>
+        {direction.id}
+      </p>
+      {/* <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -55,12 +60,10 @@ export default function FacultyView() {
               <TableCell align="center">FACULTY</TableCell>
               <TableCell align="right">ACTIONS</TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
+          </TableHead> */}
+      {/* <TableBody>
             {faculty?.directions.map((direction) => (
-              <TableRow key={direction.id}  onClick={() =>
-                route.push(`/admin/view/direction/${direction.id}`)
-              }>
+              <TableRow key={direction.id}>
                 <TableCell component="th" scope="row">
                   {direction.id}
                 </TableCell>
@@ -82,9 +85,9 @@ export default function FacultyView() {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </TableBody> */}
+      {/* </Table> */}
+      {/* </TableContainer> */}
     </div>
   );
 }

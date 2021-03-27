@@ -22,7 +22,6 @@ export default function EditDisciplines() {
     });
 
     const { currentUser } = useSelector(state => state.auth)
-    console.log(route)
     console.log(currentUser.token)
 
     

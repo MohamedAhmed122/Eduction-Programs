@@ -20,7 +20,7 @@ import { useState } from 'react';
 import Loading from '../../Components/Loading/Loading';
 
 
-export default function AdminManageFaculty() {
+export default function AdminManageDisciplines() {
     const route = useRouter()
     const { currentUser } = useSelector(state => state.auth)
     const [lists, setLists] = useState([])
@@ -40,7 +40,7 @@ export default function AdminManageFaculty() {
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell align="center">NAME</TableCell>
+                        <TableCell align="center">DISCIPLINE NAME</TableCell>
                         {/* <TableCell align="center">DIRECTIONS</TableCell>
                         <TableCell align="center">GROUP</TableCell> */}
                         <TableCell align="right">ACTIONS</TableCell>

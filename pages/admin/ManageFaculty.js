@@ -45,7 +45,7 @@ export default function AdminManageFaculty() {
           marginLeft: "10%",
           marginTop: "4rem",
           width: "80%",
-          marginBottom: "10rem",
+          marginBottom: "20rem",
         }}
       >
         <TableContainer component={Paper}>

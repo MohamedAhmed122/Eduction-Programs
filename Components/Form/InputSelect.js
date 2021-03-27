@@ -10,6 +10,7 @@ export default function InputSelect({error, width, control, options, name, ...pr
                 options={options}
                 as={Select}
                 {...props}
+                
             />
             {error &&  <div style={{marginBottom: '1rem', marginTop:'0.5rem'}}>
                 <label className='error_label'  >{error}</label>

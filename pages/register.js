@@ -1,172 +1,186 @@
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
-import { useForm,Controller } from "react-hook-form";
-
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
-import InputSelect from "../Components/Form/InputSelect";
-import FormInput from "../Components/Form/FormInput";
-import { parseDateString } from '../utils/Validate'
+
+import { parseDateString } from "../utils/Validate";
 import "yup-phone";
 
+import Image from "next/image";
+import classNames from "classnames";
+import styles from "../styles/index.module.css";
+import Alert from "@material-ui/lab/Alert";
 
-import Image from 'next/image'
-import classNames from 'classnames'
-import styles from '../styles/index.module.css'
-import Alert from '@material-ui/lab/Alert';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userRegister } from "../Redux/Auth/AuthActions";
+import {
+  fetchDirectionFromFaculty,
+  fetchFaculties,
+} from "../Requests/faculties";
+import { ShapeArray } from "../utils/Shape";
+import { Form, Formik } from "formik";
+import FromikInput from "../Components/Form/FormikInput";
+import FormikSelect from "../Components/Form/FormikSelect";
 
-import {  facultyOptions, directionOptions, groupOptions } from '../data/options'
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { userRegister } from '../Redux/Auth/AuthActions'
-
-
-const today = new Date()
+const today = new Date();
 
 const validationSchema = Yup.object({
-    name: Yup.string().required().label('Name'),
-    email: Yup.string().required().email().label('Email'),
-    password: Yup.string().required().min(5).label('Password'),
-    student: Yup.bool(),
-    phone: Yup.string()
-    .phone("RU", true, 'Number is invalid')
-    .required(),  
-    dob:Yup.date().transform(parseDateString)
+  name: Yup.string().required().label("Name"),
+  email: Yup.string().required().email().label("Email"),
+  password: Yup.string().required().min(5).label("Password"),
+  student: Yup.bool(),
+  phone: Yup.string().phone("RU", true, "Number is invalid").required(),
+  dob: Yup.date()
+    .transform(parseDateString)
     .max(today, "Invalid Date of birth"),
-    admissionYear :Yup.string().required().label('admission Year'),
-    
+  admissionYear: Yup.string().required().label("admission Year"),
 });
 
-
-
 export default function Register() {
-    const  route  = useRouter()
-    const [ checked, setChecked ] = useState(false)
-    const dispatch = useDispatch()
-    const { register, handleSubmit, errors, control  } = useForm({
-      resolver: yupResolver(validationSchema)
-    });
-    const { isAuthenticated, error } = useSelector(state => state.auth)
+  const route = useRouter();
+  const [checked, setChecked] = useState(false);
+  const [faculties, setFaculties] = useState([]);
+  const [directions, setDirections] = useState([]);
+  const dispatch = useDispatch();
 
-    useEffect(()=>{
-      if(isAuthenticated){
-        route.push('/disciplines')
-      }
-    },[isAuthenticated, route])
-  
+  const { isAuthenticated, error } = useSelector((state) => state.auth);
 
-
-    const onSubmit = data =>{ 
-      const value ={
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.password,
-        birthday: data.dob,
-        phone: data.phone,
-        admissionYear: Number(data.admissionYear),
-        faculty:'none',
-        group:'none',
-        direction:'none'
-      }
-   
-      dispatch(userRegister(value))
+  useEffect(() => {
+    if (isAuthenticated) {
+      route.push("/disciplines");
     }
-  
-  return (
-    <div className='flexAll' style={{height: "auto"}}>
-        <div className={classNames(styles.loginForm, 'flex_col')} >
-            <h1 className='main_title' >Welcome to CourseBook </h1>
-            <form  style={{width: '70%'}}  onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="name"
-              control={control}
-              defaultValue=""
-              render={({ onChange, value  }) => 
-                <FormInput  placeholder='Name'  error={errors.name?.message} onChange={onChange} value={value} />}
-              />
-              <Controller
-              name="email"
-              control={control}
-              defaultValue=""
-              render={({ onChange, value  }) => 
-                <FormInput  placeholder='Email'  error={errors.email?.message} onChange={onChange} value={value} />}
-              />
-              <Controller
-                name="phone"
-                control={control}
-                defaultValue=""
-                render={({ onChange, value  }) => 
-                  <FormInput placeholder='Phone Number'   error={errors.phone?.message} onChange={onChange} value={value} />}
-              />
-              <Controller
-                name="dob"
-                control={control}
-                defaultValue=""
-                render={({ onChange, value  }) => 
-                  <FormInput placeholder='Date of Birth ( mm.dd.yyy)'  error={errors.dob?.message} onChange={onChange} value={value} />}
-              />
-              <Controller
-                name="admissionYear"
-                control={control}
-                defaultValue=""
-                render={({ onChange, value  }) => 
-                  <FormInput placeholder='Admission Year'   error={errors.admissionYear?.message} onChange={onChange} value={value} />}
-              />
-              <Controller
-                name="password"
-                control={control}
-                defaultValue=""
-                render={({ onChange, value  }) => 
-                  <FormInput placeholder='Password' type='password'  error={errors.password?.message} onChange={onChange} value={value} />}
-              />
-               <div className='flex check_box' style={{ marginTop: 20}}>
-                    <input type='checkbox' name='teacher'  ref={register}/>
-                    <p style={{marginLeft: 10}} className='text_align'>Are you a Teacher?</p>
-                </div>
-                <div className='flex check_box'>
-                    <input type='checkbox' value={checked} onChange={()=> setChecked(!checked)}  name="student" ref={register} />
-                    <p style={{marginLeft: 10}} className='text_align'>Are you a Student?</p>
-                </div>
-                {
-                  checked &&
-                  <> 
-                   <InputSelect
-                    name="faculty"
-                    control={control}
-                    options={facultyOptions}
-                    placeholder='Faculty'
-                    error ={errors.faculty?.message}
-                  />
-                   <InputSelect
-                    name="direction"
-                    control={control}
-                    options={directionOptions}
-                    placeholder='Direction'
-                    error ={errors.direction?.message}
-                  />
-                   <InputSelect
-                    name="group"
-                    control={control}
-                    options={groupOptions}
-                    placeholder='Group'
-                    error ={errors.group?.message}
-                  />
-                  </>
-                }
-                {error && <Alert severity="error">{error}</Alert>}
-              <div className='flex_center' style={{margin: '2rem'}}>
-                  <button  style={{width: '70%'}} type='submit' className='btn_primary'> Register</button>
-              </div>
-              <h4 className='text_align'>you don't have account! 
-                  <span onClick={()=> route.push('/')} className='span_color'>Login</span>
-              </h4>
-           </form>
-        </div>
-        <div  className={classNames(styles.loginSvgContainer, 'flex_center')}>
-            <Image height={500} width={500} src='/assets/login.svg' alt='Login image' />
-        </div>
-    </div>
-  )
-}
+    fetchFaculties()
+      .then((res) => setFaculties(res))
+      .catch((err) => console.log(err));
+  }, [isAuthenticated, route]);
 
+  const onSubmit = (data) => {
+    const value = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.password,
+      birthday: data.dob,
+      phone: data.phone,
+      admissionYear: Number(data.admissionYear),
+      faculty: "none",
+      group: "none",
+      direction: "none",
+    };
+
+    dispatch(userRegister(value));
+  };
+
+  console.log(faculties);
+
+  const getDirection= (value) => {
+    const vl = faculties?.find((val) => val.value === value);
+    fetchDirectionFromFaculty(vl?.id)
+      .then((res) => {
+        setDirections(res);
+      })
+      .catch((err) => console.log(err));
+    return directions;
+  };
+
+  return (
+    <div className="flexAll" style={{ height: "auto" }}>
+      <div className={classNames(styles.loginForm, "flex_col")}>
+        <Formik
+          validationSchema={validationSchema}
+          onSubmit={(values) => console.log(values)}
+          initialValues={{
+            name: "",
+            email: "",
+            password: "",
+            admissionYear: "",
+            phone: "",
+            faculty: "",
+            dob: "",
+            direction: "",
+            group: "",
+          }}
+        >
+          {({ dirty, isSubmitting, isValid, values }) => (
+            <Form style={{ width: "70%" }}>
+              <FromikInput name="name" label="Name " />
+              <FromikInput name="email" label="Email " />
+              <FromikInput name="phone" label="Phone " />
+              <FromikInput
+                name="dob"
+                label="Date of Birth"
+                placeholder="09.25.1999"
+              />
+              <FromikInput name="admissionYear" label="Admission Year" />
+              <FromikInput name="password" label="Password " />
+
+              <div className="flex check_box" style={{ marginTop: 20 }}>
+                <input type="checkbox" name="teacher" />
+                <p style={{ marginLeft: 10 }} className="text_align">
+                  Are you a Teacher?
+                </p>
+              </div>
+              <div className="flex check_box">
+                <input
+                  type="checkbox"
+                  value={checked}
+                  onChange={() => setChecked(!checked)}
+                />
+                <p style={{ marginLeft: 10 }} className="text_align">
+                  Are you a Student?
+                </p>
+              </div>
+              {checked && (
+                <>
+                  <FormikSelect
+                    name="faculty"
+                    options={ShapeArray(faculties)}
+                    label="Faculty"
+                  />
+                 {values.faculty && <FormikSelect
+                    name="direction"
+                    options={ShapeArray(getDirection(values.faculty))}
+                    label="Direction"
+                    disabled={!values.faculty}
+                  />}
+                  <FormikSelect
+                    name="group"
+                    options={ShapeArray(getDirection(values.faculty))}
+                    label="Group"
+                    disabled={!values.direction}
+                  />
+                </>
+              )}
+
+              {error && <Alert severity="error">{error}</Alert>}
+              <div className="flex_center" style={{ margin: "2rem" }}>
+                <button
+                  style={{ width: "70%" }}
+                  type="submit"
+                  className="btn_primary"
+                >
+                  {" "}
+                  Register
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+        <h4 className="text_align">
+          you don't have account!
+          <span onClick={() => route.push("/")} className="span_color">
+            Login
+          </span>
+        </h4>
+      </div>
+      <div className={classNames(styles.loginSvgContainer, "flex_center")}>
+        <Image
+          height={500}
+          width={500}
+          src="/assets/login.svg"
+          alt="Login image"
+        />
+      </div>
+    </div>
+  );
+}
