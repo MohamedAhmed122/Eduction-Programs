@@ -1,29 +1,34 @@
+// hooks
 import { useRouter } from "next/router";
-
-import * as Yup from "yup";
-
-import { parseDateString } from "../utils/Validate";
-import "yup-phone";
-
-import Image from "next/image";
-import classNames from "classnames";
-import styles from "../styles/index.module.css";
-import Alert from "@material-ui/lab/Alert";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// redux
 import { userRegister } from "../Redux/Auth/AuthActions";
+// form and validation
+import { Form, Formik } from "formik";
+import FromikInput from "../Components/Form/FormikInput";
+import FormikSelect from "../Components/Form/FormikSelect";
+import * as Yup from "yup";
+import "yup-phone";
+// REQ
 import {
   fetchDirectionFromFaculty,
   fetchFaculties,
 } from "../Requests/faculties";
+import { fetchGroupsByDirectionId } from "../Requests/groups";
+// utils
 import { ShapeArray } from "../utils/Shape";
-import { Form, Formik } from "formik";
-import FromikInput from "../Components/Form/FormikInput";
-import FormikSelect from "../Components/Form/FormikSelect";
+import { parseDateString } from "../utils/Validate";
+// render
+import Image from "next/image";
+import classNames from "classnames";
+import styles from "../styles/index.module.css";
+import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const today = new Date();
 
+// validation Schema
 const validationSchema = Yup.object({
   name: Yup.string().required().label("Name"),
   email: Yup.string().required().email().label("Email"),
@@ -41,10 +46,12 @@ export default function Register() {
   const [checked, setChecked] = useState(false);
   const [faculties, setFaculties] = useState([]);
   const [directions, setDirections] = useState([]);
+  const [groups, setGroups] = useState([]);
   const dispatch = useDispatch();
 
   const { isAuthenticated, error } = useSelector((state) => state.auth);
 
+  // navigate Authenticated user to disciplines and fetch faculties
   useEffect(() => {
     if (isAuthenticated) {
       route.push("/disciplines");
@@ -54,6 +61,7 @@ export default function Register() {
       .catch((err) => console.log(err));
   }, [isAuthenticated, route]);
 
+  // handle Submit and dispatch userRegister
   const onSubmit = (data) => {
     const value = {
       name: data.name,
@@ -73,14 +81,29 @@ export default function Register() {
 
   console.log(faculties);
 
-  const getDirection= (value) => {
+  // get Direction by FacultyId
+  const getDirection = (value) => {
     const vl = faculties?.find((val) => val.value === value);
     fetchDirectionFromFaculty(vl?.id)
       .then((res) => {
         setDirections(res);
       })
       .catch((err) => console.log(err));
+
     return directions;
+  };
+
+  // get Groups by FacultyId
+
+  const getGroups = (value) => {
+    const val = directions?.find((val) => val.value === value);
+    const id = val?.id;
+    fetchGroupsByDirectionId(id)
+      .then((res) => {
+        setGroups(res);
+      })
+      .catch((err) => console.log(err));
+      return groups
   };
 
   return (
@@ -132,28 +155,35 @@ export default function Register() {
               </div>
               {checked && (
                 <>
+                  {faculties.length > 0 ? (
+                    <FormikSelect
+                      name="faculty"
+                      options={ShapeArray(faculties)}
+                      label="Faculty"
+                    />
+                  ) : (
+                    <CircularProgress size={50} />
+                  )}
+
                   <FormikSelect
-                    name="faculty"
-                    options={ShapeArray(faculties)}
-                    label="Faculty"
-                  />
-                 {values.faculty && <FormikSelect
                     name="direction"
                     options={ShapeArray(getDirection(values.faculty))}
                     label="Direction"
                     disabled={!values.faculty}
-                  />}
+                  />
+
                   <FormikSelect
                     name="group"
-                    options={ShapeArray(getDirection(values.faculty))}
+                    options={ShapeArray(getGroups(values.direction))}
                     label="Group"
                     disabled={!values.direction}
                   />
                 </>
               )}
-
+              {console.log(getGroups(values.direction), 'group')}
               {error && <Alert severity="error">{error}</Alert>}
               <div className="flex_center" style={{ margin: "2rem" }}>
+                {/* <h1>{getGroups(values.direction)}</h1> */}
                 <button
                   style={{ width: "70%" }}
                   type="submit"
