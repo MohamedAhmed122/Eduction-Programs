@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   expanded:{}
 }));
 
-export default function CardItem() {
+export default function CardItem({semester}) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const router = useRouter()
@@ -54,12 +54,12 @@ export default function CardItem() {
   return (
     <Card  style={{margin: 50, width: 400,}} className={classes.root}>
       <CardContent>
-      <Typography paragraph align='center' style={{color: '#027373', fontWeight:'bold', fontSize:25, marginBottom:30}}> 
+      {/* <Typography paragraph align='center' style={{color: '#027373', fontWeight:'bold', fontSize:25, marginBottom:30}}> 
           Faculty Hits
-      </Typography >
+      </Typography > */}
       <Typography paragraph align='center' variant="h4"  > 
 
-        Computer Science
+        {semester.discipline.name}
       </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -78,10 +78,8 @@ export default function CardItem() {
         <CardContent>
           <Typography paragraph>Group:</Typography>
           <div className='flex_wrap'>  
-           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9713</p>
-           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9712</p>
-           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9714</p>
-           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}>9715</p>
+           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}> {semester.group.name}</p>
+           
           </div>
         </CardContent>
       </Collapse>

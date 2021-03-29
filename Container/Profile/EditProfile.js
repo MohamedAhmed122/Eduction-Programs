@@ -96,13 +96,13 @@ export default function account() {
                     <Controller
                     name="dob"
                     control={control}
-                    defaultValue={profile.birthday}
+                    defaultValue={profile.birthDay}
                     render={({ onChange, value  }) => 
                         <FormInput  placeholder='Date of Birth (mm.dd.yyyy)'  error={errors.dob?.message} onChange={onChange} value={value} />}
                     />
                     <Controller
                     name="phone"
-                    defaultValue={""}
+                    defaultValue={profile.phoneNumber}
                     control={control}
                     render={({ onChange, value  }) => 
                         <FormInput placeholder='Phone Number'  error={errors.phone?.message} onChange={onChange} value={value} />}

@@ -53,7 +53,7 @@ export const userRegister = (value) => async(dispatch) =>{
                 'content-types': 'application/json'
             }
         }
-        console.log(value)
+        console.log(value, 'oooo')
       
         const { data } = await 
         axios.post(`${baseURL}Accounts/register`, (value), config )

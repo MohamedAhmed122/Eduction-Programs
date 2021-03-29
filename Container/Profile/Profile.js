@@ -32,11 +32,11 @@ export default function Profile() {
                 </div>
                 <div className='flex' style={{marginTop: 20}}>
                     <h3 className={styles.mainText}>Phone:</h3>
-                    <p>{profile.phone}</p>
+                    <p>{profile.phoneNumber}</p>
                 </div>
                 <div className='flex' style={{marginTop: 20}}>
                     <h3 className={styles.mainText}>DOB:</h3>
-                    <p>{profile.birthday}</p>
+                    <p>{profile.birthDay}</p>
                 </div>
                 <div className='flex' style={{marginTop: 20}}>
                     <h3 className={styles.mainText}>Admission Year:</h3>

@@ -5,7 +5,7 @@ import TeacherSubjects from '../../Container/Semsters/TeacherSubjects'
 
 import style from './styleTab.module.css'
 
-export default function DisciplineTab() {
+export default function DisciplineTab({secondSemester,firstSemester}) {
 
 
     const [ activeTab, setActiveTab ] = useState(0)
@@ -19,8 +19,8 @@ export default function DisciplineTab() {
                 <li onClick={()=>setActiveTab(2)} className={activeTab === 2 ? style.current: null } >Teacher Subjects</li>
             </ul>
             <div> 
-                {activeTab === 0 &&      <SpringSemester />}
-                {activeTab === 1 &&     <AutumnSemester />}
+                {activeTab === 0 &&     <SpringSemester secondSemester={secondSemester}/>}
+                {activeTab === 1 &&     <AutumnSemester firstSemester={firstSemester} />}
                 {activeTab === 2 &&     <TeacherSubjects />}
             </div>
         </div>

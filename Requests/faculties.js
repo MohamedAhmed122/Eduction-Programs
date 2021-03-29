@@ -16,7 +16,7 @@ export const fetchFacultyById = async ( id) => {
   
 
  export const fetchDirectionFromFaculty = async (id) => {
-  const { data } = await axios.get(`${baseUrl}Faculties/${id}/directions`, config());
+  const { data } = await axios.get(`${baseUrl}${id}/Directions`, config());
 
   return data;
 };

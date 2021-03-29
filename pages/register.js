@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // redux
 import { userRegister } from "../Redux/Auth/AuthActions";
-// form and validation
+// Form and validation
 import { Form, Formik } from "formik";
 import FromikInput from "../Components/Form/FormikInput";
 import FormikSelect from "../Components/Form/FormikSelect";
@@ -43,7 +43,8 @@ const validationSchema = Yup.object({
 
 export default function Register() {
   const route = useRouter();
-  const [checked, setChecked] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
+  // const [isTeacher, setIsTeacher] = useState(false);
   const [faculties, setFaculties] = useState([]);
   const [directions, setDirections] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -63,19 +64,23 @@ export default function Register() {
 
   // handle Submit and dispatch userRegister
   const onSubmit = (data) => {
+    const groupValue = groups?.find((group) => group.value === data.group);
+    // new Date(date).getTime() / 1000,
+    // const birthday =  new Date(data?.dob).getTime() / 1000;
     const value = {
       name: data.name,
       email: data.email,
       password: data.password,
       confirmPassword: data.password,
       birthday: data.dob,
-      phone: data.phone,
-      admissionYear: Number(data.admissionYear),
-      faculty: "none",
-      group: "none",
-      direction: "none",
+      phoneNumber: data.phone,
+      education: {
+        group: groupValue.id,
+        admissionYear: Number(data.admissionYear),
+      },
+      accountType: isStudent ? "Student" : "Teacher",
     };
-
+    console.log(value);
     dispatch(userRegister(value));
   };
 
@@ -93,17 +98,20 @@ export default function Register() {
     return directions;
   };
 
-  // get Groups by FacultyId
-
-  const getGroups = (value) => {
+  // get Groups by directionId and facultyId
+  const getGroups = (value, facultyVal) => {
     const val = directions?.find((val) => val.value === value);
     const id = val?.id;
-    fetchGroupsByDirectionId(id)
+    const vl = faculties?.find((vl) => vl.value === facultyVal);
+    const facultyId = vl?.id
+
+    fetchGroupsByDirectionId(id, facultyId)
       .then((res) => {
         setGroups(res);
       })
       .catch((err) => console.log(err));
-      return groups
+      console.log(groups)
+    return groups;
   };
 
   return (
@@ -111,7 +119,7 @@ export default function Register() {
       <div className={classNames(styles.loginForm, "flex_col")}>
         <Formik
           validationSchema={validationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={onSubmit}
           initialValues={{
             name: "",
             email: "",
@@ -132,7 +140,7 @@ export default function Register() {
               <FromikInput
                 name="dob"
                 label="Date of Birth"
-                placeholder="09.25.1999"
+                placeholder="1999-09-24"
               />
               <FromikInput name="admissionYear" label="Admission Year" />
               <FromikInput name="password" label="Password " />
@@ -146,14 +154,14 @@ export default function Register() {
               <div className="flex check_box">
                 <input
                   type="checkbox"
-                  value={checked}
-                  onChange={() => setChecked(!checked)}
+                  value={isStudent}
+                  onChange={() => setIsStudent(!isStudent)}
                 />
                 <p style={{ marginLeft: 10 }} className="text_align">
                   Are you a Student?
                 </p>
               </div>
-              {checked && (
+              {isStudent && (
                 <>
                   {faculties.length > 0 ? (
                     <FormikSelect
@@ -174,13 +182,14 @@ export default function Register() {
 
                   <FormikSelect
                     name="group"
-                    options={ShapeArray(getGroups(values.direction))}
+                    options={ShapeArray(
+                      getGroups(values.direction, values.faculty)
+                    )}
                     label="Group"
                     disabled={!values.direction}
                   />
                 </>
               )}
-              {console.log(getGroups(values.direction), 'group')}
               {error && <Alert severity="error">{error}</Alert>}
               <div className="flex_center" style={{ margin: "2rem" }}>
                 {/* <h1>{getGroups(values.direction)}</h1> */}

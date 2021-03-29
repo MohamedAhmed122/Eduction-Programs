@@ -26,7 +26,7 @@ export default function AdminManageDisciplines() {
     const [lists, setLists] = useState([])
 
     useEffect(()=>{
-        fetchDisciplines(currentUser?.token)
+        fetchDisciplines()
             .then(res => setLists(res))
             .catch(err => console.log(err))
     },[])
