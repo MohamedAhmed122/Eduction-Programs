@@ -65,8 +65,7 @@ export default function Register() {
   // handle Submit and dispatch userRegister
   const onSubmit = (data) => {
     const groupValue = groups?.find((group) => group.value === data.group);
-    // new Date(date).getTime() / 1000,
-    // const birthday =  new Date(data?.dob).getTime() / 1000;
+
     const value = {
       name: data.name,
       email: data.email,
@@ -102,10 +101,8 @@ export default function Register() {
   const getGroups = (value, facultyVal) => {
     const val = directions?.find((val) => val.value === value);
     const id = val?.id;
-    const vl = faculties?.find((vl) => vl.value === facultyVal);
-    const facultyId = vl?.id
 
-    fetchGroupsByDirectionId(id, facultyId)
+    fetchGroupsByDirectionId(id)
       .then((res) => {
         setGroups(res);
       })
