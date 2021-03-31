@@ -27,7 +27,7 @@ export default function FacultyView() {
 
   useEffect(() => {
     if (id) {
-      fetchFacultyById(currentUser.token, id)
+      fetchFacultyById( id)
         .then((res) => setFaculty(res))
         .catch((err) => console.log(err));
     }

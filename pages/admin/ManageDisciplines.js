@@ -31,7 +31,7 @@ export default function AdminManageDisciplines() {
             .catch(err => console.log(err))
     },[])
 
-    if (lists.length === 0) return <Loading />
+    if (lists.items?.length === 0) return <Loading />
     return (
         <>
         <div style={{marginLeft: '10%', marginTop: '9rem', width:'80%', marginBottom: '4rem'}}>
@@ -39,30 +39,30 @@ export default function AdminManageDisciplines() {
             <Table  aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell align="center">DISCIPLINE NAME</TableCell>
+                        {/* <TableCell>ID</TableCell> */}
+                        <TableCell align="left">DISCIPLINE NAME</TableCell> 
                         {/* <TableCell align="center">DIRECTIONS</TableCell>
                         <TableCell align="center">GROUP</TableCell> */}
                         <TableCell align="right">ACTIONS</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {lists?.map((list) => (
+                    {lists?.items?.map((list) => (
                         <TableRow key={list.id}>
-                            <TableCell component="th" scope="row">
+                            {/* <TableCell component="th" scope="row">
                                 {list.id}
-                            </TableCell>
-                            <TableCell align="center" component="th" scope="row">
+                            </TableCell> */}
+                            <TableCell align="left" component="th" scope="row">
                                 {list.name}
                             </TableCell>
-                            {/* <TableCell align="center"><h2>{users.name}</h2> </TableCell>
+                             {/* <TableCell align="center"><h2>{users.name}</h2> </TableCell>
                             <TableCell align="center">{users.directions.map(dir =>(
                                 <p style={{margin: 20}} key={dir.id}>{dir.name}</p>
                             ))}</TableCell>
                             <TableCell align="center">{users.groups.map(dir =>(
                                 <div style={{margin: 20}} key={dir.id}>{dir.name}</div>
-                            ))}</TableCell> */}
-                            
+                            ))}</TableCell>
+                             */}
                             <TableCell align="right">
                                 <ButtonGroup variant="contained">
                                     <Button 

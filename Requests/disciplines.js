@@ -3,7 +3,7 @@ import { baseUrl, config } from "./config";
 
 export const fetchDisciplines = async (token, teacherId) => {
   const { data } = await axios.get(
-    `${baseUrl}disciplines?teacher=${teacherId}`,
+    `${baseUrl}Disciplines`,
     config(token)
   );
   return data;

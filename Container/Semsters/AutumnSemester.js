@@ -3,8 +3,7 @@ import CardItem from "../../Components/Card/Card";
 
 export default function AutumnSemester({firstSemester}) {
     return (
-        <div className='flex_col' style={{marginTop: 60}}>
-           <Typography paragraph align='center' variant="h3"> Autumn Semester</Typography>
+        <div className='flex_wrap' style={{marginTop: 60}}>
           {firstSemester?.map((semester,i) =>  <CardItem  semester={semester} key={i}/>)  }
         </div>
     )
