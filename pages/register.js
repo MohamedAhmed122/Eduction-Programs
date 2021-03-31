@@ -4,204 +4,200 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // redux
 import { userRegister } from "../Redux/Auth/AuthActions";
-// Form and validation
-import { Form, Formik } from "formik";
-import FromikInput from "../Components/Form/FormikInput";
-import FormikSelect from "../Components/Form/FormikSelect";
-import * as Yup from "yup";
-import "yup-phone";
 // REQ
 import {
   fetchDirectionFromFaculty,
   fetchFaculties,
 } from "../Requests/faculties";
 import { fetchGroupsByDirectionId } from "../Requests/groups";
-// utils
-import { ShapeArray } from "../utils/Shape";
-import { parseDateString } from "../utils/Validate";
 // render
 import Image from "next/image";
 import classNames from "classnames";
 import styles from "../styles/index.module.css";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-const today = new Date();
-
-// validation Schema
-const validationSchema = Yup.object({
-  name: Yup.string().required().label("Name"),
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(5).label("Password"),
-  student: Yup.bool(),
-  phone: Yup.string().phone("RU", true, "Number is invalid").required(),
-  dob: Yup.date()
-    .transform(parseDateString)
-    .max(today, "Invalid Date of birth"),
-  admissionYear: Yup.string().required().label("admission Year"),
-});
+import FormSelect from "../Components/Form/FormSelect";
+import Loading from "../Components/Loading/Loading";
 
 export default function Register() {
   const route = useRouter();
-  const [isStudent, setIsStudent] = useState(false);
-  // const [isTeacher, setIsTeacher] = useState(false);
-  const [faculties, setFaculties] = useState([]);
-  const [directions, setDirections] = useState([]);
-  const [groups, setGroups] = useState([]);
   const dispatch = useDispatch();
+  const { isAuthenticated, error, success } = useSelector(
+    (state) => state.auth
+  );
+  // state for inputs
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [dob, setDob] = useState("");
+  const [admissionYear, setAdmissionYear] = useState("");
+  const [password, setPassword] = useState("");
+  // state for selectInputs
+  const [facultyRes, setFacultyRes] = useState(null);
+  const [faculty, setFaculty] = useState("");
+  const [directionRes, setDirectionRes] = useState(null);
+  const [direction, setDirection] = useState("");
+  const [groupRes, setGroupRes] = useState(null);
+  const [groups, setGroups] = useState("");
 
-  const { isAuthenticated, error } = useSelector((state) => state.auth);
-
-  // navigate Authenticated user to disciplines and fetch faculties
+  // navigate Authenticated user to disciplinePage || fetch faculties
   useEffect(() => {
     if (isAuthenticated) {
       route.push("/disciplines");
     }
     fetchFaculties()
-      .then((res) => setFaculties(res))
+      .then((res) => setFacultyRes(res))
       .catch((err) => console.log(err));
   }, [isAuthenticated, route]);
 
+  // Fetch the directions using the facultyId
+  useEffect(() => {
+    if (faculty !== "") {
+      const value = facultyRes?.find((val) => val.name === faculty);
+      const facultyId = value?.id;
+
+      fetchDirectionFromFaculty(facultyId)
+        .then((res) => {
+          setDirectionRes(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [faculty]);
+
+  // Fetch the Groups using the DirectionId
+  useEffect(() => {
+    if (!faculty) return;
+    if (direction !== "") {
+      const value = directionRes?.find((val) => val.name === direction);
+      const directionId = value?.id;
+
+      fetchGroupsByDirectionId(directionId)
+        .then((res) => {
+          setGroupRes(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [faculty, direction, groups]);
+
+  // set to empty
+  useEffect(() => {
+    if (direction === "") {
+      setGroupRes(null);
+    }
+    if (faculty === "") {
+      setGroups("");
+      setDirection("");
+    }
+  }, [faculty, direction, groups]);
+
   // handle Submit and dispatch userRegister
-  const onSubmit = (data) => {
-    const groupValue = groups?.find((group) => group.value === data.group);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, password, name, phone, dob, admissionYear);
+    const group = groupRes?.find((group) => group.name === groups);
+    const groupId = group?.id;
 
     const value = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      confirmPassword: data.password,
-      birthday: data.dob,
-      phoneNumber: data.phone,
+      name,
+      email,
+      password,
+      confirmPassword: password,
+      birthday: dob,
+      phoneNumber: phone,
       education: {
-        group: groupValue.id,
-        admissionYear: Number(data.admissionYear),
+        group: groupId,
+        admissionYear,
       },
-      accountType: isStudent ? "Student" : "Teacher",
+      accountType: "Student",
     };
-    console.log(value);
     dispatch(userRegister(value));
   };
 
-  console.log(faculties);
-
-  // get Direction by FacultyId
-  const getDirection = (value) => {
-    const vl = faculties?.find((val) => val.value === value);
-    fetchDirectionFromFaculty(vl?.id)
-      .then((res) => {
-        setDirections(res);
-      })
-      .catch((err) => console.log(err));
-
-    return directions;
-  };
-
-  // get Groups by directionId and facultyId
-  const getGroups = (value, facultyVal) => {
-    const val = directions?.find((val) => val.value === value);
-    const id = val?.id;
-
-    fetchGroupsByDirectionId(id)
-      .then((res) => {
-        setGroups(res);
-      })
-      .catch((err) => console.log(err));
-      console.log(groups)
-    return groups;
-  };
-
+  if (success) return <Loading />;
   return (
     <div className="flexAll" style={{ height: "auto" }}>
       <div className={classNames(styles.loginForm, "flex_col")}>
-        <Formik
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          initialValues={{
-            name: "",
-            email: "",
-            password: "",
-            admissionYear: "",
-            phone: "",
-            faculty: "",
-            dob: "",
-            direction: "",
-            group: "",
-          }}
+        <form
+          style={{ width: "70%" }}
+          onSubmit={(e) => handleSubmit(e)}
+          autoComplete="off"
         >
-          {({ dirty, isSubmitting, isValid, values }) => (
-            <Form style={{ width: "70%" }}>
-              <FromikInput name="name" label="Name " />
-              <FromikInput name="email" label="Email " />
-              <FromikInput name="phone" label="Phone " />
-              <FromikInput
-                name="dob"
-                label="Date of Birth"
-                placeholder="1999-09-24"
-              />
-              <FromikInput name="admissionYear" label="Admission Year" />
-              <FromikInput name="password" label="Password " />
+          <input
+            required
+            className="input"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            required
+            className="input"
+            placeholder="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            required
+            className="input"
+            placeholder="Phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <input
+            required
+            className="input"
+            // type='date'
+            placeholder="Date of Birth (2020-03-30)"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+          <input
+            required
+            className="input"
+            placeholder="AdmissionYear"
+            value={admissionYear}
+            onChange={(e) => setAdmissionYear(e.target.value)}
+          />
+          <input
+            required
+            className="input"
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <br /> <br />
+          <FormSelect
+            label="Faculty"
+            value={faculty}
+            onChange={(e) => setFaculty(e.target.value)}
+            options={facultyRes}
+          />
+          <FormSelect
+            label="Direction"
+            value={direction}
+            onChange={(e) => setDirection(e.target.value)}
+            options={directionRes}
+          />
+          <FormSelect
+            label="Group"
+            value={groups}
+            onChange={(e) => setGroups(e.target.value)}
+            options={groupRes}
+          />
+          {error && <Alert severity="error">{error}</Alert>}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button
+              className="btn_primary"
+              style={{ marginTop: 20 }}
+              type="submit"
+            >
+              Register
+            </button>
+          </div>
+        </form>
 
-              <div className="flex check_box" style={{ marginTop: 20 }}>
-                <input type="checkbox" name="teacher" />
-                <p style={{ marginLeft: 10 }} className="text_align">
-                  Are you a Teacher?
-                </p>
-              </div>
-              <div className="flex check_box">
-                <input
-                  type="checkbox"
-                  value={isStudent}
-                  onChange={() => setIsStudent(!isStudent)}
-                />
-                <p style={{ marginLeft: 10 }} className="text_align">
-                  Are you a Student?
-                </p>
-              </div>
-              {isStudent && (
-                <>
-                  {faculties.length > 0 ? (
-                    <FormikSelect
-                      name="faculty"
-                      options={ShapeArray(faculties)}
-                      label="Faculty"
-                    />
-                  ) : (
-                    <CircularProgress size={50} />
-                  )}
-
-                  <FormikSelect
-                    name="direction"
-                    options={ShapeArray(getDirection(values.faculty))}
-                    label="Direction"
-                    disabled={!values.faculty}
-                  />
-
-                  <FormikSelect
-                    name="group"
-                    options={ShapeArray(
-                      getGroups(values.direction, values.faculty)
-                    )}
-                    label="Group"
-                    disabled={!values.direction}
-                  />
-                </>
-              )}
-              {error && <Alert severity="error">{error}</Alert>}
-              <div className="flex_center" style={{ margin: "2rem" }}>
-                {/* <h1>{getGroups(values.direction)}</h1> */}
-                <button
-                  style={{ width: "70%" }}
-                  type="submit"
-                  className="btn_primary"
-                >
-                  {" "}
-                  Register
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
         <h4 className="text_align">
           you don't have account!
           <span onClick={() => route.push("/")} className="span_color">

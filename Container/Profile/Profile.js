@@ -11,16 +11,19 @@ export default function Profile() {
     const { profile, loading } = useSelector(state => state.profile)
     const { currentUser } = useSelector(state => state.auth)
 
+    
+    // handle image src
+    const placeholderSrc = 'https://simg.nicepng.com/png/small/128-1280406_view-user-icon-png-user-circle-icon-png.png';
+    const AvatarSrc  = `${baseURL}Profiles/get-avatar/${currentUser.userId}`;
+    const src = AvatarSrc? AvatarSrc : placeholderSrc;
+    
     if (loading) return <Loading />
-
-    const src ='https://simg.nicepng.com/png/small/128-1280406_view-user-icon-png-user-circle-icon-png.png'
-
     return (
         <div>
             <Card className={styles.card}>
                 <div className='flex_col'>
                     {/* <img className={styles.img} src={src} alt='Img'/> */}
-                    <img className={styles.img} src={`${baseURL}Profiles/get-avatar/${currentUser.id}`} />
+                    <img className={styles.img} src={src} />
                 </div>
                 <div className='flex' style={{marginTop: 20}}>
                     <h3 className={styles.mainText}>Name:</h3>
