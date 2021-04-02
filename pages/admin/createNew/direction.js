@@ -1,48 +1,53 @@
-import React from 'react'
-import { useForm,Controller } from "react-hook-form";
-import InputSelect from "../../../Components/Form/InputSelect";
-import FormInput from "../../../Components/Form/FormInput";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { facultyOptions } from '../../../data/options'
-import * as Yup from "yup";
+import React, { useEffect, useState } from "react";
+import { fetchFaculties } from "../../../Requests/faculties";
+import { createDirectionReq } from "../../../Requests/directions";
+import FormSelect from "../../../Components/Form/FormSelect";
 
+export default function CreateDirection() {
+  const [facultyRes, setFacultyRes] = useState(null);
+  const [faculty, setFaculty] = useState("");
+  const [direction, setDirection] = useState();
 
-const validationSchema = Yup.object({
-    direction: Yup.string().required().label('Direction'),
-});
+  // fetch faculties
+  useEffect(() => {
+    fetchFaculties()
+      .then((res) => setFacultyRes(res))
+      .catch((err) => console.log(err));
+  }, []);
 
-
-export default function direction() {
-
-    const { register, handleSubmit, errors, control  } = useForm({
-        resolver: yupResolver(validationSchema)
-      });
-
-      const onSubmit = data => console.log(data)
-    
-
-    return (
-        <div style={{height: '100vh'}} className='flex_col'>
-            <h1 className='main_title'>Create New Direction</h1>
-            <form  style={{width: '50%'}}  onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                name="direction"
-                control={control}
-                defaultValue=""
-                render={({ onChange, value  }) => 
-                    <FormInput  placeholder='Direction'  error={errors.direction?.message} onChange={onChange} value={value} />}
-                />
-                <div style={{marginTop: 30, marginBottom: 30}}>
-                  <InputSelect
-                    name="faculty"
-                    control={control}
-                    options={facultyOptions}
-                    placeholder='Faculty'
-                    error ={errors.faculty?.message}
-                  />
-                </div>
-                <button type='submit' className='btn_primary'>Create New</button>
-            </form>
-        </div>
-    )
+  // submit from
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const facultyValue = facultyRes?.find((f) => f.name === faculty);
+    const facultyId = facultyValue?.id;
+    createDirectionReq(facultyId, {
+      facultyId,
+      name: direction,
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+  return (
+    <div style={{ height: "100vh" }} className="flex_col">
+      <h1 className="main_title">Create New Direction</h1>
+      <form onSubmit={(e) => handleSubmit(e)} style={{ width: "60%" }}>
+        <input
+          className="input"
+          required
+          placeholder="Direction Name"
+          value={direction}
+          onChange={(e) => setDirection(e.target.value)}
+        />
+        <br /> <br />
+        <FormSelect
+          options={facultyRes}
+          value={faculty}
+          onChange={(e) => setFaculty(e.target.value)}
+        />
+        <button className="btn_primary" type="Submit">
+          Create New
+        </button>
+      </form>
+    </div>
+  );
 }

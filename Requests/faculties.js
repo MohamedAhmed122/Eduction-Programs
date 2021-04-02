@@ -7,16 +7,19 @@ export const fetchFaculties = async () => {
   return data;
 };
 
+export const fetchFacultyById = async (id) => {
+  const { data } = await axios.get(`${baseUrl}Faculties/${id}`, config());
 
-export const fetchFacultyById = async ( id) => {
-    const { data } = await axios.get(`${baseUrl}Faculties/${id}`, config());
-  
-    return data;
- };
-  
+  return data;
+};
 
- export const fetchDirectionFromFaculty = async (id) => {
+export const fetchDirectionFromFaculty = async (id) => {
   const { data } = await axios.get(`${baseUrl}${id}/Directions`, config());
 
   return data;
+};
+
+// create New
+export const CreateNewFaculty = async (name) => {
+  return await axios.put(`${baseUrl}faculties`, (name), config());
 };

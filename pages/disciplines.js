@@ -15,6 +15,7 @@ export default function disciplines() {
   const [firstSemester, setFirstSemester] = useState([])
   const [secondSemester, setSecondSemester] = useState([])
 
+  // check if the user is authenticated, and then fetch Disciplines for Teacher
   useEffect(() => {
     if (!isAuthenticated) {
       route.push("/");
@@ -25,6 +26,7 @@ export default function disciplines() {
     }
   }, [isAuthenticated, route]);
 
+  //  set the first Semester and the second Semester
   useEffect(()=>{
     if (disciplines){
       setFirstSemester(disciplines?.items?.filter(dis => dis.semester === 0))
@@ -32,9 +34,6 @@ export default function disciplines() {
     }
   },[disciplines])
 
-  console.log(firstSemester)
-  console.log(secondSemester)
-  
 
   if (disciplines.length < 0) return <Loading />
   return (

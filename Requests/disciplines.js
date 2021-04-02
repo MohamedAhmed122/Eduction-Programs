@@ -24,3 +24,5 @@ export const fetchTeacherDisciplines = async (token, id) => {
   );
   return data;
 };
+
+

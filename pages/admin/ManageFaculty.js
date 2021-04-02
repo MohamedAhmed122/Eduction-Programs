@@ -1,4 +1,5 @@
-import { users } from "../../data/data";
+import axios from 'axios'
+
 import { useRouter } from "next/router";
 import {
   Button,
@@ -13,23 +14,15 @@ import {
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { fetchFaculties } from "../../Requests/faculties";
+
 import Loading from "../../Components/Loading/Loading";
+import { baseUrl } from "../../Requests/config";
 
-export default function AdminManageFaculty() {
+export default function AdminManageFaculty({data}) {
   const route = useRouter();
-  const { currentUser } = useSelector((state) => state.auth);
-  const [faculties, setFaculties] = useState([]);
 
-  useEffect(() => {
-    fetchFaculties(currentUser.token)
-      .then((res) => setFaculties(res))
-      .catch((err) => console.log(err));
-  }, []);
 
-  if (faculties.length === 0) return <Loading />;
+  if (data.length === 0) return <Loading />;
   return (
     <>
       <div style={{ marginTop: 120 }} className="flex_center">
@@ -58,7 +51,7 @@ export default function AdminManageFaculty() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {faculties?.map((faculty) => (
+              {data?.map((faculty) => (
                 <TableRow style={{cursor: 'pointer'}} key={faculty.id}  onClick={() =>
                     route.push(`/admin/view/faculty/${faculty.id}`)
                   } >
@@ -90,3 +83,15 @@ export default function AdminManageFaculty() {
     </>
   );
 }
+
+
+
+export const getStaticProps = async (context) => {
+  const { data } = await axios.get(`${baseUrl}Faculties`);
+
+  return {
+    props: {
+      data,
+    }, 
+  };
+};

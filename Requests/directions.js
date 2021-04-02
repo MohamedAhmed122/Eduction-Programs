@@ -8,3 +8,10 @@ export const getDirectionById = async (token, id) => {
 };
 
 
+
+// create new
+
+export const createDirectionReq = async  (id, value) =>{
+
+    return await axios.post(`${baseUrl}${id}/directions`, value, config());
+}
