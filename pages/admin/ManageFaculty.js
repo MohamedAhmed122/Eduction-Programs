@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 import { useRouter } from "next/router";
 import {
@@ -17,10 +17,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import Loading from "../../Components/Loading/Loading";
 import { baseUrl } from "../../Requests/config";
+import { deleteFaculty } from "../../Requests/faculties";
 
-export default function AdminManageFaculty({data}) {
+export default function AdminManageFaculty({ data }) {
   const route = useRouter();
-
 
   if (data.length === 0) return <Loading />;
   return (
@@ -52,13 +52,18 @@ export default function AdminManageFaculty({data}) {
             </TableHead>
             <TableBody>
               {data?.map((faculty) => (
-                <TableRow style={{cursor: 'pointer'}} key={faculty.id}  onClick={() =>
-                    route.push(`/admin/view/faculty/${faculty.id}`)
-                  } >
+                <TableRow style={{ cursor: "pointer" }} key={faculty.id}>
                   <TableCell component="th" scope="row">
                     {faculty.id}
                   </TableCell>
-                  <TableCell align="center">{faculty.name}</TableCell>
+                  <TableCell
+                    align="center"
+                    onClick={() =>
+                      route.push(`/admin/view/faculty/${faculty.id}`)
+                    }
+                  >
+                    {faculty.name}
+                  </TableCell>
                   <TableCell align="center">
                     <ButtonGroup variant="contained">
                       <Button
@@ -70,7 +75,7 @@ export default function AdminManageFaculty({data}) {
                         <EditIcon />
                       </Button>
                       <Button style={{ color: "red" }}>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => deleteFaculty(faculty.id)} />
                       </Button>
                     </ButtonGroup>
                   </TableCell>
@@ -84,14 +89,12 @@ export default function AdminManageFaculty({data}) {
   );
 }
 
-
-
 export const getStaticProps = async (context) => {
   const { data } = await axios.get(`${baseUrl}Faculties`);
 
   return {
     props: {
       data,
-    }, 
+    },
   };
 };

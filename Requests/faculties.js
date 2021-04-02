@@ -23,3 +23,9 @@ export const fetchDirectionFromFaculty = async (id) => {
 export const CreateNewFaculty = async (name) => {
   return await axios.put(`${baseUrl}faculties`, (name), config());
 };
+
+// Delete Faculty
+
+export const deleteFaculty = async (id) => {
+  return await axios.delete(`${baseUrl}Faculties/${id}`, config());
+};

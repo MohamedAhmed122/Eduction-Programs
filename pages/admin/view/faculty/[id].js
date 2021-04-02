@@ -12,31 +12,14 @@ import {
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { fetchFacultyById } from "../../../../Requests/faculties";
 import Loading from "../../../../Components/Loading/Loading";
+import { baseUrl } from "../../../../Requests/config";
 
-export default function FacultyView() {
-  const {
-    query: { id },
-  } = useRouter();
+
+export default function FacultyView({ data }) {
   const route = useRouter();
-  const { currentUser } = useSelector((state) => state.auth);
-  const [faculty, setFaculty] = useState();
 
-  useEffect(() => {
-    if (id) {
-      fetchFacultyById( id)
-        .then((res) => setFaculty(res))
-        .catch((err) => console.log(err));
-    }
-  }, [id]);
-
-  console.log(faculty);
-
-  if (!faculty) return <Loading />;
-
+  if (!data) return <Loading />;
   return (
     <div
       style={{
@@ -46,7 +29,9 @@ export default function FacultyView() {
         marginBottom: "13rem",
       }}
     >
-      <h1 className='main_title' style={{textAlign: 'center'}}>{faculty.name}</h1>
+      <h1 className="main_title" style={{ textAlign: "center" }}>
+        {data.name}
+      </h1>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -57,14 +42,20 @@ export default function FacultyView() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {faculty?.directions.map((direction) => (
-              <TableRow key={direction.id}  onClick={() =>
-                route.push(`/admin/view/direction/${direction.id}`)
-              }>
+            {data?.directions.map((direction) => (
+              <TableRow key={direction.id}>
                 <TableCell component="th" scope="row">
                   {direction.id}
                 </TableCell>
-                <TableCell align="center">{direction.name}</TableCell>
+                <TableCell
+                  align="center"
+                  key={direction.id}
+                  onClick={() =>
+                    route.push(`/admin/view/direction/${direction.id}`)
+                  }
+                >
+                  {direction.name}
+                </TableCell>
                 <TableCell align="right">
                   <ButtonGroup variant="contained">
                     <Button
@@ -88,3 +79,29 @@ export default function FacultyView() {
     </div>
   );
 }
+
+export const getStaticProps = async (context) => {
+  const res = await fetch(`${baseUrl}Faculties/${context.params.id}`);
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+export const getStaticPaths = async (context) => {
+  const res = await fetch(`${baseUrl}Faculties`);
+
+  const data = await res.json();
+
+  const ids = data.map((data) => data.id);
+
+  const paths = ids.map((id) => ({ params: { id: id.toString() } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
