@@ -17,8 +17,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useEffect, useState } from "react";
 import Loading from "../../../../Components/Loading/Loading";
 
-
-import { fetchGroupsByDirectionId} from  "../../../../Requests/groups";
+import {
+  deleteGroup,
+  fetchGroupsByDirectionId,
+} from "../../../../Requests/groups";
 
 export default function GroupView() {
   const {
@@ -29,7 +31,7 @@ export default function GroupView() {
 
   useEffect(() => {
     if (id) {
-        fetchGroupsByDirectionId(id)
+      fetchGroupsByDirectionId(id)
         .then((res) => setGroups(res))
         .catch((err) => console.log(err));
     }
@@ -90,8 +92,11 @@ export default function GroupView() {
                       <Button
                         style={{ color: "red" }}
                         onClick={() => {
-                         
-                          window.location.reload();
+                          deleteGroup(id, group.id)
+                            .then((res) => console.log(res))
+                            .catch((err) => clg(err));
+
+                            window.location.reload();
                         }}
                       >
                         <DeleteIcon />
