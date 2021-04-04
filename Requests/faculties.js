@@ -21,7 +21,7 @@ export const fetchDirectionFromFaculty = async (id) => {
 
 // create New
 export const CreateNewFaculty = async (name) => {
-  return await axios.put(`${baseUrl}faculties`, (name), config());
+  return await axios.post(`${baseUrl}faculties`, (name), config());
 };
 
 // Delete Faculty

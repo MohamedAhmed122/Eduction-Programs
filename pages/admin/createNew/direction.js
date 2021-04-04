@@ -41,6 +41,7 @@ export default function CreateDirection() {
         <br /> <br />
         <FormSelect
           options={facultyRes}
+          label="Faculty"
           value={faculty}
           onChange={(e) => setFaculty(e.target.value)}
         />

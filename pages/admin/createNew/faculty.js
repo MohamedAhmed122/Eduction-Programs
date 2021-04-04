@@ -9,13 +9,13 @@ const validationSchema = Yup.object({
   faculty: Yup.string().required().label("Faculty"),
 });
 
-export default function faculty() {
+export default function Faculty() {
   const { register, handleSubmit, errors, control } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = (data) => {
-    CreateNewFaculty({name :data.faculty})
+    CreateNewFaculty({name : data.faculty})
       .then((res) => console.log(res))
       .catch((errors) => console.log(errors));
     console.log(data.faculty);

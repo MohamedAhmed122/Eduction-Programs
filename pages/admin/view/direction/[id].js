@@ -11,83 +11,115 @@ import {
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
+import ReplyAllIcon from "@material-ui/icons/ReplyAll";
+
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Loading from "../../../../Components/Loading/Loading";
-import { getDirectionById } from "../../../../Requests/directions";
+import {
+  deleteDirection,
+  getDirectionById,
+} from "../../../../Requests/directions";
 
 export default function FacultyView() {
   const {
     query: { id },
   } = useRouter();
   const route = useRouter();
-  const { currentUser } = useSelector((state) => state.auth);
-  const [direction, setDirections] = useState();
+  const [directions, setDirections] = useState();
+  // const [ isDeleted]
 
   useEffect(() => {
     if (id) {
-      getDirectionById(currentUser.token, id)
+      getDirectionById(id)
         .then((res) => setDirections(res))
         .catch((err) => console.log(err));
     }
   }, [id]);
 
-  console.log(direction);
-
-  if (!direction) return <Loading />;
+  if (!directions) return <Loading />;
+  console.log(directions);
 
   return (
-    <div
-      style={{
-        marginLeft: "10%",
-        marginTop: "10rem",
-        width: "80%",
-        marginBottom: "43rem",
-      }}
-    >
-      <h1 className="main_title" style={{ textAlign: "center" }}>
-        {direction.name}
-      </h1>
-      <p style={{ textAlign: "center" }}>
-        {direction.id}
-      </p>
-      {/* <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="center">FACULTY</TableCell>
-              <TableCell align="right">ACTIONS</TableCell>
-            </TableRow>
-          </TableHead> */}
-      {/* <TableBody>
-            {faculty?.directions.map((direction) => (
-              <TableRow key={direction.id}>
-                <TableCell component="th" scope="row">
-                  {direction.id}
-                </TableCell>
-                <TableCell align="center">{direction.name}</TableCell>
-                <TableCell align="right">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      onClick={() =>
-                        route.push(`/admin/edit/direction/${direction.id}`)
-                      }
-                      style={{ color: "black" }}
-                    >
-                      <EditIcon />
-                    </Button>
-                    <Button style={{ color: "red" }}>
-                      <DeleteIcon />
-                    </Button>
-                  </ButtonGroup>
-                </TableCell>
+    <>
+      <div style={{ marginTop: 140 }} className="flex_center">
+        <Button
+          variant="outlined"
+          onClick={() => route.push("/admin/createNew/direction")}
+        >
+          Create New
+        </Button>
+      </div>
+      <div
+        style={{
+          marginLeft: "10%",
+          marginTop: "4rem",
+          width: "80%",
+          marginBottom: "43rem",
+        }}
+      >
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">DIRECTION NAME</TableCell>
+                <TableCell align="center">GO TO DIRECTIONS</TableCell>
+                <TableCell align="center">GO TO GROUPS</TableCell>
+                <TableCell align="center">ACTIONS</TableCell>
               </TableRow>
-            ))}
-          </TableBody> */}
-      {/* </Table> */}
-      {/* </TableContainer> */}
-    </div>
+            </TableHead>
+            <TableBody>
+              {directions?.map((dir) => (
+                <TableRow key={dir.id}>
+                  <TableCell align="left">{dir.name}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      style={{ color: "blue" }}
+                      onClick={() =>
+                        route.push(`/admin/view/direction/${dir.id}`)
+                      }
+                    >
+                      <ReplyAllIcon />
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      style={{ color: "green" }}
+                      onClick={() =>
+                        route.push(`/admin/view/faculty/${dir.id}`)
+                      }
+                    >
+                      <ReplyAllIcon style={{ transform: "scaleX(-1)" }} />
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <ButtonGroup variant="contained">
+                      <Button
+                        // onClick={()=> route.push(`/admin/edit/direction/${dir.id}`)}
+                        style={{ color: "black" }}
+                      >
+                        <EditIcon />
+                      </Button>
+                      <Button
+                        style={{ color: "red" }}
+                        onClick={() => {
+                          deleteDirection(id, dir.id)
+                            .then((res) => console.log(res))
+                            .catch((err) => console.log(err));
+
+                          window.location.reload();
+                        }}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
   );
 }

@@ -2,10 +2,7 @@ import axios from "axios";
 import { baseUrl, config } from "./config";
 
 export const fetchDisciplines = async (token, teacherId) => {
-  const { data } = await axios.get(
-    `${baseUrl}Disciplines`,
-    config(token)
-  );
+  const { data } = await axios.get(`${baseUrl}Disciplines`, config(token));
   return data;
 };
 
@@ -25,4 +22,8 @@ export const fetchTeacherDisciplines = async (token, id) => {
   return data;
 };
 
+// Delete Disciplines
 
+export const deleteDisciplineById = async (id) => {
+  return await axios.delete(`${baseUrl}Disciplines/${id}`, config());
+};

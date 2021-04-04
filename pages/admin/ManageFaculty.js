@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import { useRouter } from "next/router";
 import {
   Button,
@@ -13,6 +12,7 @@ import {
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
+import ReplyAllIcon from "@material-ui/icons/ReplyAll";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import Loading from "../../Components/Loading/Loading";
@@ -45,24 +45,33 @@ export default function AdminManageFaculty({ data }) {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
                 <TableCell align="center">FACULTY</TableCell>
+                <TableCell align="center">GO TO DIRECTIONS</TableCell>
+                <TableCell align="center">GO TO FACULTY</TableCell>
                 <TableCell align="center">ACTIONS</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data?.map((faculty) => (
                 <TableRow style={{ cursor: "pointer" }} key={faculty.id}>
-                  <TableCell component="th" scope="row">
-                    {faculty.id}
+                  <TableCell align="center">{faculty.name}</TableCell>
+
+                  <TableCell align="center">
+                    <Button style={{ color: "blue" }} onClick={() =>
+                        route.push(`/admin/view/direction/${faculty.id}`)
+                      }>
+                      <ReplyAllIcon />
+                    </Button>
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    onClick={() =>
-                      route.push(`/admin/view/faculty/${faculty.id}`)
-                    }
-                  >
-                    {faculty.name}
+                  <TableCell align="center">
+                    <Button
+                      style={{ color: "green" }}
+                      onClick={() =>
+                        route.push(`/admin/view/faculty/${faculty.id}`)
+                      }
+                    >
+                      <ReplyAllIcon style={{ transform: "scaleX(-1)" }} />
+                    </Button>
                   </TableCell>
                   <TableCell align="center">
                     <ButtonGroup variant="contained">
