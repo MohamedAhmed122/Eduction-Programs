@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import { fetchFaculties } from "../../../Requests/faculties";
 import { createDirectionReq } from "../../../Requests/directions";
 import FormSelect from "../../../Components/Form/FormSelect";
 
 export default function CreateDirection() {
+  const router = useRouter();
   const [facultyRes, setFacultyRes] = useState(null);
   const [faculty, setFaculty] = useState("");
   const [direction, setDirection] = useState();
@@ -26,6 +29,7 @@ export default function CreateDirection() {
     })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    router.back();
   };
   return (
     <div style={{ height: "100vh" }} className="flex_col">

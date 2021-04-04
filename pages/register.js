@@ -15,7 +15,6 @@ import Image from "next/image";
 import classNames from "classnames";
 import styles from "../styles/index.module.css";
 import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import FormSelect from "../Components/Form/FormSelect";
 import Loading from "../Components/Loading/Loading";
 

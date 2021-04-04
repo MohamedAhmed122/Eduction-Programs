@@ -11,8 +11,6 @@ import {
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useEffect, useState } from "react";
 import Loading from "../../../../Components/Loading/Loading";
@@ -63,7 +61,6 @@ export default function GroupView() {
             <TableHead>
               <TableRow>
                 <TableCell align="left">GROUP NUMBER</TableCell>
-                {/* <TableCell align="center">GO TO GROUPS</TableCell> */}
                 <TableCell align="center">ACTIONS</TableCell>
               </TableRow>
             </TableHead>
@@ -71,22 +68,9 @@ export default function GroupView() {
               {groups?.map((group) => (
                 <TableRow key={group.id}>
                   <TableCell align="left">{group.name}</TableCell>
-                  {/* <TableCell align="center">
-                    <Button
-                      style={{ color: "green" }}
-                      onClick={() =>
-                        route.push(`/admin/view/groups/${group.id}`)
-                      }
-                    >
-                      <ReplyAllIcon style={{ transform: "scaleX(-1)" }} />
-                    </Button>
-                  </TableCell> */}
                   <TableCell align="center">
                     <ButtonGroup variant="contained">
-                      <Button
-                        // onClick={()=> route.push(`/admin/edit/direction/${dir.id}`)}
-                        style={{ color: "black" }}
-                      >
+                      <Button style={{ color: "black" }}>
                         <EditIcon />
                       </Button>
                       <Button
@@ -96,7 +80,7 @@ export default function GroupView() {
                             .then((res) => console.log(res))
                             .catch((err) => clg(err));
 
-                            window.location.reload();
+                          window.location.reload();
                         }}
                       >
                         <DeleteIcon />

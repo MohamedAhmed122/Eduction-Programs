@@ -10,3 +10,12 @@ export const fetchGroupsByDirectionId = async (id) => {
 export const deleteGroup = async (paramId, groupId) => {
   return await axios.delete(`${baseUrl}${paramId}/Groups/${groupId}`, config());
 };
+
+
+
+// create new Group
+
+export const createGroupReq= async  (id, name) =>{
+
+  return await axios.post(`${baseUrl}${id}/Groups`, name, config());
+}

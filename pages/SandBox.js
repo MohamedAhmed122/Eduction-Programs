@@ -7,8 +7,11 @@ import {
 import { fetchGroupsByDirectionId } from "../Requests/groups";
 import { ShapeArray } from "../utils/Shape";
 import Loading from "../Components/Loading/Loading";
+import { useRouter } from "next/router";
 
 export default function App() {
+  const router = useRouter()
+
   const [faculty, setFaculty] = useState("");
   const [facultyRes, setFacultyRes] = useState(null);
   const [direction, setDirection] = useState("");
@@ -70,6 +73,7 @@ export default function App() {
 
   if (!facultyRes) return <Loading />;
   return (
+    <>
     <form style={{ margin: 200 }} onSubmit={handleSubmit}>
       {/* <FormControl style={{ display: "block", width: 200 }}> */}
       <InputLabel id="demo-mutiple-name-label">Faculty</InputLabel>
@@ -134,5 +138,7 @@ export default function App() {
       {/* </FormControl> */}
       <button type="submit"> Submit</button>
     </form>
+      <button onClick={()=> router.back()} >Back</button>
+      </>
   );
 }

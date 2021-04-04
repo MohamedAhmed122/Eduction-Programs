@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from 'next/router'
 import { useForm, Controller } from "react-hook-form";
 import FormInput from "../../../Components/Form/FormInput";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,6 +11,7 @@ const validationSchema = Yup.object({
 });
 
 export default function Faculty() {
+  const router = useRouter()
   const { register, handleSubmit, errors, control } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -19,6 +21,7 @@ export default function Faculty() {
       .then((res) => console.log(res))
       .catch((errors) => console.log(errors));
     console.log(data.faculty);
+    router.back();
   };
 
   return (
