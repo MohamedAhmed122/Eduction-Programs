@@ -76,7 +76,7 @@ export default function FacultyView() {
                     <Button
                       style={{ color: "blue" }}
                       onClick={() =>
-                        route.push(`/admin/view/direction/${dir.id}`)
+                        route.push(`/admin/DirectionDetail/${dir.id}`)
                       }
                     >
                       <ReplyAllIcon />
@@ -86,7 +86,7 @@ export default function FacultyView() {
                     <Button
                       style={{ color: "green" }}
                       onClick={() =>
-                        route.push(`/admin/view/faculty/${dir.id}`)
+                        route.push(`/admin/view/groups/${dir.id}`)
                       }
                     >
                       <ReplyAllIcon style={{ transform: "scaleX(-1)" }} />
