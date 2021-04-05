@@ -59,7 +59,7 @@ export default function CardItem({semester}) {
       </Typography > */}
       <Typography paragraph align='center' variant="h4"  > 
 
-        {semester.discipline.name}
+        {semester?.discipline?.name || semester?.name}
       </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -78,7 +78,7 @@ export default function CardItem({semester}) {
         <CardContent>
           <Typography paragraph>Group:</Typography>
           <div className='flex_wrap'>  
-           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}> {semester.group.name}</p>
+           <p className={classes.link} onClick={()=> router.push('/disciplines/33')}> {semester?.group?.name || ""}</p>
            
           </div>
         </CardContent>

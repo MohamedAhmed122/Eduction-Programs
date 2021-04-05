@@ -14,9 +14,19 @@ export const fetchDisciplineById = async (token, id) => {
   return data;
 };
 
+// Fetch Disciplines for Teacher
 export const fetchTeacherDisciplines = async (token, id) => {
   const { data } = await axios.get(
     `${baseUrl}teachers/${id}/disciplines`,
+    config(token)
+  );
+  return data;
+};
+
+// Fetch Disciplines for Students
+export const fetchStudentsDisciplines = async (token, id) => {
+  const { data } = await axios.get(
+    `${baseUrl}Students/${id}/disciplines`,
     config(token)
   );
   return data;

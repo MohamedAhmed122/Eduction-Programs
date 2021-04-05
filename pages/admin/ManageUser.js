@@ -31,8 +31,8 @@ export default function AdminManageUser() {
                 <SidebarRow Icon={AccountCircleIcon} title='Users' />
                 <SidebarRow Icon={LibraryBooksIcon} title='Disciplines' onClick={()=>route.push('/admin/ManageDisciplines')} />
                 <SidebarRow Icon={AccountBalanceIcon} title='Faculty'onClick={()=>route.push('/admin/ManageFaculty')} />
-                <SidebarRow Icon={OpenWithIcon} title='Create D' onClick={()=>route.push('/admin/createNew/direction')} />
-                {/* <SidebarRow Icon={GroupIcon} title='Group' onClick={()=>route.push('/admin/ManageGroups')} /> */}
+                {/* <SidebarRow Icon={OpenWithIcon} title='Create D' onClick={()=>route.push('/admin/createNew/direction')} /> */}
+                <SidebarRow Icon={GroupIcon} title='Group' onClick={()=>route.push('/admin/createNew/group')} />
             </Sidebar>
             <div style={{marginLeft: '15%', marginTop: '9rem', width:'80%', marginBottom: '4rem'}}>
                 <TableContainer component={Paper}>

@@ -68,8 +68,11 @@ export default function AdminManageDisciplines({ data }) {
                       <Button
                         style={{ color: "red" }}
                         onClick={() => {
-                          deleteDisciplineById(list.id);
-                          window.location.reload()
+                          deleteDisciplineById(list.id)
+                            .then((res) => console.log(res))
+                            .catch((err) => console.log(err));
+                            // console.log(list.id)
+                          window.location.reload();
                         }}
                       >
                         <DeleteIcon />

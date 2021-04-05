@@ -32,7 +32,7 @@ export default function Home() {
   
   useEffect(()=>{
     if(isAuthenticated){
-      route.push('/disciplines')
+      route.push('/profile')
     }
   },[isAuthenticated, route])
 

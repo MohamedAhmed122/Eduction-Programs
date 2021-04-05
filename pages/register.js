@@ -42,7 +42,7 @@ export default function Register() {
   // navigate Authenticated user to disciplinePage || fetch faculties
   useEffect(() => {
     if (isAuthenticated) {
-      route.push("/disciplines");
+      route.push("/profile");
     }
     fetchFaculties()
       .then((res) => setFacultyRes(res))
