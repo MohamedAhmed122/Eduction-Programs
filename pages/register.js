@@ -25,6 +25,7 @@ export default function Register() {
     (state) => state.auth
   );
   // state for inputs
+  const [checked, setChecked] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -116,6 +117,7 @@ export default function Register() {
   return (
     <div className="flexAll" style={{ height: "auto" }}>
       <div className={classNames(styles.loginForm, "flex_col")}>
+        <h1 className="main_title">Welcome to CourseBook</h1>
         <form
           style={{ width: "70%" }}
           onSubmit={(e) => handleSubmit(e)}
@@ -167,24 +169,46 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br /> <br />
-          <FormSelect
-            label="Faculty"
-            value={faculty}
-            onChange={(e) => setFaculty(e.target.value)}
-            options={facultyRes}
-          />
-          <FormSelect
-            label="Direction"
-            value={direction}
-            onChange={(e) => setDirection(e.target.value)}
-            options={directionRes}
-          />
-          <FormSelect
-            label="Group"
-            value={groups}
-            onChange={(e) => setGroups(e.target.value)}
-            options={groupRes}
-          />
+          <div className="flex check_box">
+            <input type="checkbox" name="student" />
+            <p style={{ marginLeft: 10 }} className="text_align">
+              Are you a Teacher?
+            </p>
+          </div>
+          <div className="flex check_box" style={{ marginTop: 20 }}>
+            <input
+              type="checkbox"
+              name="teacher"
+              value={checked}
+              onChange={() => setChecked(!checked)}
+            />
+            <p style={{ marginLeft: 10 }} className="text_align">
+              Are you a Student?
+            </p>
+          </div>
+          {checked && (
+            <>
+              <br /> <br />
+              <FormSelect
+                label="Faculty"
+                value={faculty}
+                onChange={(e) => setFaculty(e.target.value)}
+                options={facultyRes}
+              />
+              <FormSelect
+                label="Direction"
+                value={direction}
+                onChange={(e) => setDirection(e.target.value)}
+                options={directionRes}
+              />
+              <FormSelect
+                label="Group"
+                value={groups}
+                onChange={(e) => setGroups(e.target.value)}
+                options={groupRes}
+              />
+            </>
+          )}
           {error && <Alert severity="error">{error}</Alert>}
           <div style={{ display: "flex", justifyContent: "center" }}>
             <button

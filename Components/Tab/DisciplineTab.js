@@ -25,7 +25,7 @@ export default function DisciplineTab({
     <div>
       <ul className={style.tabs}>
         <li></li>
-        {currentUser.role !== "Teacher" && (
+        {currentUser?.role !== "Teacher" && (
           <>
             {" "}
             <li
@@ -42,7 +42,7 @@ export default function DisciplineTab({
             </li>{" "}
           </>
         )}
-        {currentUser.role === "Teacher" && (
+        {currentUser?.role === "Teacher" && (
           <li
             onClick={() => setActiveTab(2)}
             className={activeTab === 2 ? style.current : null}
