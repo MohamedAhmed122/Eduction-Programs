@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Loading from "../../../../Components/Loading/Loading";
 import { editGroup, getGroupById } from "../../../../Requests/groups";
 
-export default function updateFaculty() {
+export default function updateGroup() {
   const [name, setName] = useState(group?.name || "");
   const {
     query: { id },

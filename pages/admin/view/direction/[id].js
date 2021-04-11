@@ -88,7 +88,7 @@ export default function FacultyView() {
                   <TableCell align="center">
                     <ButtonGroup variant="contained">
                       <Button
-                        // onClick={()=> route.push(`/admin/edit/direction/${dir.id}`)}
+                        onClick={()=> route.push(`/admin/edit/direction/${dir.id}`)}
                         style={{ color: "black" }}
                       >
                         <EditIcon />
