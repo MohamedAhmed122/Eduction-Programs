@@ -1,5 +1,3 @@
-import { facultyData } from "../../data/data";
-import axios from "axios";
 import { useRouter } from "next/router";
 import {
   Button,
@@ -16,14 +14,29 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import Loading from "../../Components/Loading/Loading";
-import { baseUrl } from "../../Requests/config";
-import { deleteDisciplineById } from "../../Requests/disciplines";
+import {
+  deleteDisciplineById,
+  fetchDisciplines,
+} from "../../Requests/disciplines";
+import { useEffect, useState } from "react";
 
-export default function AdminManageDisciplines({ data }) {
+export default function AdminManageDisciplines() {
   const route = useRouter();
-  console.log(route);
+  const [disciplines, setDisciplines] = useState();
+  const [isDeleted, setIsDeleted] = useState(false);
+  
+  useEffect(() => {
+    fetchDisciplines()
+      .then((res) => setDisciplines(res))
+      .catch((err) => console.log(err));
+    if (isDeleted) {
+      setTimeout(() => {
+        setIsDeleted(false);
+      }, 200);
+    }
+  }, [isDeleted]);
 
-  if (data.items?.length === 0) return <Loading />;
+  if (!disciplines) return <Loading />;
   return (
     <div>
       <div style={{ marginTop: 140 }} className="flex_center">
@@ -51,7 +64,7 @@ export default function AdminManageDisciplines({ data }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.items?.map((list) => (
+              {disciplines?.items?.map((list) => (
                 <TableRow key={list.id}>
                   <TableCell align="left" component="th" scope="row">
                     {list.name}
@@ -69,10 +82,11 @@ export default function AdminManageDisciplines({ data }) {
                         style={{ color: "red" }}
                         onClick={() => {
                           deleteDisciplineById(list.id)
-                            .then((res) => console.log(res))
+                            .then((res) => {
+                              console.log(res);
+                              setIsDeleted(true);
+                            })
                             .catch((err) => console.log(err));
-                            // console.log(list.id)
-                          window.location.reload();
                         }}
                       >
                         <DeleteIcon />
@@ -89,12 +103,12 @@ export default function AdminManageDisciplines({ data }) {
   );
 }
 
-export const getStaticProps = async (context) => {
-  const { data } = await axios.get(`${baseUrl}Disciplines`);
+// export const getStaticProps = async (context) => {
+//   const { data } = await axios.get(`${baseUrl}Disciplines`);
 
-  return {
-    props: {
-      data,
-    }, // will be passed to the page component as props
-  };
-};
+//   return {
+//     props: {
+//       data,
+//     }, // will be passed to the page component as props
+//   };
+// };

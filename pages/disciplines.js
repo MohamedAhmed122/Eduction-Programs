@@ -33,7 +33,7 @@ export default function disciplines() {
         .then((res) => setStudentDisciplines(res))
         .catch((err) => console.log(err));
     }
-  }, [isAuthenticated, route, currentUser.role]);
+  }, [isAuthenticated, route, currentUser?.role]);
 
    // set the first Semester and the second Semester
   useEffect(()=>{

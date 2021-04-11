@@ -1,58 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import FormInput from "../../../../Components/Form/FormInput";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { fetchFacultyById } from "../../../../Requests/faculties";
 
-const validationSchema = Yup.object({
-  faculty: Yup.string().required().label("Faculty"),
-});
+import { useRouter } from "next/router";
+import { fetchFacultyById, editFaculty } from "../../../../Requests/faculties";
+import Loading from "../../../../Components/Loading/Loading";
 
 export default function updateFaculty() {
-  const { register, handleSubmit, errors, control } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
-
+  const [name, setName] = useState(faculty?.name || "");
   const {
     query: { id },
   } = useRouter();
-  const { currentUser } = useSelector((state) => state.auth);
-  const [faculty, setFaculty] = useState([]);
+  const router = useRouter();
+  const [faculty, setFaculty] = useState();
 
   useEffect(() => {
     if (id) {
-      fetchFacultyById(currentUser.token, id)
+      fetchFacultyById(id)
         .then((res) => setFaculty(res))
         .catch((err) => console.log(err));
+      setName(faculty?.name);
     }
   }, [id]);
 
-  console.log(faculty);
-  const onSubmit = (data) => console.log(data);
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    editFaculty(id, { name })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+      router.back()
+  };
+  if (!faculty) return <Loading />;
+  console.log(faculty?.name);
   return (
     <div style={{ height: "100vh" }} className="flex_col">
       <h1 className="main_title">Update Faculty</h1>
-      <form style={{ width: "50%" }} onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="faculty"
-          control={control}
-          defaultValue=""
-          render={({ onChange, value }) => (
-            <FormInput
-              placeholder="Faculty"
-              error={errors.faculty?.message}
-              onChange={onChange}
-              value={value}
-            />
-          )}
+      <form style={{ width: "50%" }} onSubmit={(e) => handleSubmit(e)}>
+        <input
+          defaultValue={faculty?.name}
+          placeholder="Faculty Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="input"
         />
         <div style={{ marginBottom: 30 }} />
         <button type="submit" className="btn_primary">
-          Create New
+          Update Faculty
         </button>
       </form>
     </div>

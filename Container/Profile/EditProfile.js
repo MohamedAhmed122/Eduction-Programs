@@ -52,6 +52,7 @@ export default function account() {
             fullName : data.name,
             admissionYear : data.admissionYear,
             birthday : data.dob,
+            phoneNumber :  data.phone
         }))
         if (error){
             enqueueSnackbar(`Oops,${error} `,{variant : 'error'} );

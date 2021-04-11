@@ -70,7 +70,11 @@ export default function GroupView() {
                   <TableCell align="left">{group.name}</TableCell>
                   <TableCell align="center">
                     <ButtonGroup variant="contained">
-                      <Button style={{ color: "black" }}>
+                      <Button style={{ color: "black" }}
+                        onClick={() =>
+                          route.push(`/admin/edit/group/${group.id}`)
+                        }
+                      >
                         <EditIcon />
                       </Button>
                       <Button

@@ -21,11 +21,16 @@ export const fetchDirectionFromFaculty = async (id) => {
 
 // create New
 export const CreateNewFaculty = async (name) => {
-  return await axios.post(`${baseUrl}faculties`, (name), config());
+  return await axios.post(`${baseUrl}faculties`, name, config());
 };
 
 // Delete Faculty
 
 export const deleteFaculty = async (id) => {
   return await axios.delete(`${baseUrl}Faculties/${id}`, config());
+};
+
+// update Faculty
+export const editFaculty = async (id, name) => {
+  return await axios.put(`${baseUrl}faculties/${id}`, name, config());
 };

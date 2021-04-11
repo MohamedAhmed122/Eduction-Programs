@@ -6,11 +6,13 @@ import classNames from 'classnames'
 import {Chip} from '@material-ui/core'
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import FaceIcon from '@material-ui/icons/Face';
+import { useSelector } from 'react-redux';
 
 
 export default function Navbar({inverted = true}) {
 
     const route = useRouter()
+    const {profile} = useSelector(state => state.profile)
 
     return (
         <div className={classNames('flex_between', styles.nav)}>
@@ -22,7 +24,7 @@ export default function Navbar({inverted = true}) {
                 <div className='flex'>
                     <div className={styles.link} onClick={()=> route.push('/disciplines')}>Disciplines</div>
                     <div className={styles.link} onClick={()=> route.push('/profile')}>
-                        <Chip style={{cursor: 'pointer'}} size='medium' label='Mohamed Youssef' icon={<FaceIcon />} />
+                        <Chip style={{cursor: 'pointer'}} size='medium' label={profile?.name || 'username'} icon={<FaceIcon />} />
                     </div>
                 </div>
             }

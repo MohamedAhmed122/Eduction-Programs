@@ -27,7 +27,7 @@ export default function FacultyView() {
   } = useRouter();
   const route = useRouter();
   const [directions, setDirections] = useState();
-  // const [ isDeleted]
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -35,7 +35,12 @@ export default function FacultyView() {
         .then((res) => setDirections(res))
         .catch((err) => console.log(err));
     }
-  }, [id]);
+    if (isDeleted) {
+      setTimeout(() => {
+        setIsDeleted(true);
+      }, 200);
+    }
+  }, [id, isDeleted]);
 
   if (!directions) return <Loading />;
   console.log(directions);
@@ -63,7 +68,7 @@ export default function FacultyView() {
             <TableHead>
               <TableRow>
                 <TableCell align="left">DIRECTION NAME</TableCell>
-                <TableCell align="center">GO TO DIRECTIONS</TableCell>
+                {/* <TableCell align="center">GO TO DIRECTIONS</TableCell> */}
                 <TableCell align="center">GO TO GROUPS</TableCell>
                 <TableCell align="center">ACTIONS</TableCell>
               </TableRow>
@@ -74,20 +79,8 @@ export default function FacultyView() {
                   <TableCell align="left">{dir.name}</TableCell>
                   <TableCell align="center">
                     <Button
-                      style={{ color: "blue" }}
-                      onClick={() =>
-                        route.push(`/admin/DirectionDetail/${dir.id}`)
-                      }
-                    >
-                      <ReplyAllIcon />
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
                       style={{ color: "green" }}
-                      onClick={() =>
-                        route.push(`/admin/view/groups/${dir.id}`)
-                      }
+                      onClick={() => route.push(`/admin/view/groups/${dir.id}`)}
                     >
                       <ReplyAllIcon style={{ transform: "scaleX(-1)" }} />
                     </Button>
@@ -104,10 +97,11 @@ export default function FacultyView() {
                         style={{ color: "red" }}
                         onClick={() => {
                           deleteDirection(id, dir.id)
-                            .then((res) => console.log(res))
+                            .then((res) => {
+                              console.log(res);
+                              setIsDeleted(true);
+                            })
                             .catch((err) => console.log(err));
-
-                          window.location.reload();
                         }}
                       >
                         <DeleteIcon />

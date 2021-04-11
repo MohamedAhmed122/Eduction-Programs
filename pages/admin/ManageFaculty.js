@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import {
   Button,
@@ -14,15 +13,27 @@ import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import ReplyAllIcon from "@material-ui/icons/ReplyAll";
 import DeleteIcon from "@material-ui/icons/Delete";
-
 import Loading from "../../Components/Loading/Loading";
-import { baseUrl } from "../../Requests/config";
-import { deleteFaculty } from "../../Requests/faculties";
+import { deleteFaculty, fetchFaculties } from "../../Requests/faculties";
+import { useEffect, useState } from "react";
 
-export default function AdminManageFaculty({ data }) {
+export default function AdminManageFaculty() {
   const route = useRouter();
+  const [faculties, setFaculties] = useState();
+  const [isDeleted, setIsDeleted] = useState(false);
+  
+  useEffect(() => {
+    fetchFaculties()
+      .then((res) => setFaculties(res))
+      .catch((err) => console.log(err));
+    if (isDeleted) {
+      setTimeout(() => {
+        setIsDeleted(false);
+      }, 200);
+    }
+  }, [isDeleted]);
 
-  if (data.length === 0) return <Loading />;
+  if (!faculties) return <Loading />;
   return (
     <>
       <div style={{ marginTop: 120 }} className="flex_center">
@@ -47,27 +58,19 @@ export default function AdminManageFaculty({ data }) {
               <TableRow>
                 <TableCell align="center">FACULTY</TableCell>
                 <TableCell align="center">GO TO DIRECTIONS</TableCell>
-                <TableCell align="center">GO TO FACULTY</TableCell>
+                {/* <TableCell align="center">GO TO FACULTY</TableCell> */}
                 <TableCell align="center">ACTIONS</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.map((faculty) => (
+              {faculties?.map((faculty) => (
                 <TableRow style={{ cursor: "pointer" }} key={faculty.id}>
                   <TableCell align="center">{faculty.name}</TableCell>
-
-                  <TableCell align="center">
-                    <Button style={{ color: "blue" }} onClick={() =>
-                        route.push(`/admin/view/direction/${faculty.id}`)
-                      }>
-                      <ReplyAllIcon />
-                    </Button>
-                  </TableCell>
                   <TableCell align="center">
                     <Button
                       style={{ color: "green" }}
                       onClick={() =>
-                        route.push(`/admin/view/faculty/${faculty.id}`)
+                        route.push(`/admin/view/direction/${faculty.id}`)
                       }
                     >
                       <ReplyAllIcon style={{ transform: "scaleX(-1)" }} />
@@ -83,8 +86,18 @@ export default function AdminManageFaculty({ data }) {
                       >
                         <EditIcon />
                       </Button>
-                      <Button style={{ color: "red" }}>
-                        <DeleteIcon onClick={() => deleteFaculty(faculty.id)} />
+                      <Button
+                        style={{ color: "red" }}
+                        onClick={() => {
+                          deleteFaculty(faculty.id)
+                            .then((res) => {
+                              console.log(res);
+                              setIsDeleted(true);
+                            })
+                            .catch((err) => console.log(err));
+                        }}
+                      >
+                        <DeleteIcon />
                       </Button>
                     </ButtonGroup>
                   </TableCell>
@@ -98,12 +111,12 @@ export default function AdminManageFaculty({ data }) {
   );
 }
 
-export const getStaticProps = async (context) => {
-  const { data } = await axios.get(`${baseUrl}Faculties`);
+// export const getStaticProps = async (context) => {
+//   const { data } = await axios.get(`${baseUrl}Faculties`);
 
-  return {
-    props: {
-      data,
-    },
-  };
-};
+//   return {
+//     props: {
+//       data,
+//     },
+//   };
+// };

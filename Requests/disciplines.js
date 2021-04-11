@@ -6,10 +6,10 @@ export const fetchDisciplines = async (token, teacherId) => {
   return data;
 };
 
-export const fetchDisciplineById = async (token, id) => {
+export const fetchDisciplineById = async ( id) => {
   const { data } = await axios.get(
     `${baseUrl}Disciplines/${id}`,
-    config(token)
+    config()
   );
   return data;
 };
