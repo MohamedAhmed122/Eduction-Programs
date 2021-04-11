@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Loading from "../../../../Components/Loading/Loading";
-import { editGroup, getGroupById } from "../../../../Requests/groups";
-import { getSingleDirection } from "../../../../Requests/directions";
+import {
+  updateDirectionById,
+  getSingleDirection,
+} from "../../../../Requests/directions";
 
 export default function updateDirection() {
   const [name, setName] = useState(direction?.name || "");
@@ -14,7 +16,7 @@ export default function updateDirection() {
 
   useEffect(() => {
     if (id) {
-      getSingleDirection(id)
+      getSingleDirection(id, name)
         .then((res) => setDirection(res))
         .catch((err) => console.log(err));
       setName(direction?.name);
@@ -22,11 +24,11 @@ export default function updateDirection() {
   }, [id]);
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // editGroup(id, { name })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-    //   router.back()
+    e.preventDefault();
+    updateDirectionById(id, {name})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    router.back();
   };
   if (!direction) return <Loading />;
   console.log(direction);

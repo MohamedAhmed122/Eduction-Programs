@@ -24,3 +24,8 @@ export const deleteDirection = async (id, directionId) => {
     config()
   );
 };
+
+// update Direction
+export const updateDirectionById = async (id, name) => {
+  return await axios.put(`${baseUrl}Directions/${id}`,name, config());
+};
