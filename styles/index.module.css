@@ -1,7 +1,7 @@
 .loginSvgContainer {
   flex: 0.5;
   background-color: #d0ecec;
-  min-height: 140vh;
+  min-height: 100vh;
   height: auto;
 }
 .loginForm {

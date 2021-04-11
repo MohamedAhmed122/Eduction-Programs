@@ -47,7 +47,7 @@ export default function Home() {
             <Image height={500} width={500} src='/assets/login.svg' alt='Login image' />
         </div>
         <div className={classNames(styles.loginForm, 'flex_col')}>
-            <h1 className='main_title'>Welcome to My website  </h1>
+            <h1 className='main_title'>Welcome to CourseBook  </h1>
             <form  style={{width: '70%'}}  onSubmit={handleSubmit(onSubmit)}>
               <Controller
               name="email"
