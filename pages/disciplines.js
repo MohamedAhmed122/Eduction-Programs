@@ -48,7 +48,7 @@ export default function disciplines() {
 
   if (disciplines.length < 0) return <Loading />;
   return (
-    <div style={{ marginTop: 120, marginBottom: 400 }}>
+    <div style={{ marginTop: 120, minHeight: '100vh'}}>
       <Tab
         firstSemester={firstSemester}
         secondSemester={secondSemester}

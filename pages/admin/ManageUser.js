@@ -79,8 +79,7 @@ export default function AdminManageUser() {
                 <TableRow>
                   <TableCell align="center">NAME</TableCell>
                   <TableCell align="center">EMAIL</TableCell>
-                  <TableCell align="center">ADMIN</TableCell>
-                  <TableCell align="center">Teacher</TableCell>
+                  <TableCell align="center">Role</TableCell>
                   <TableCell align="right">ACTIONS</TableCell>
                 </TableRow>
               </TableHead>
@@ -90,30 +89,16 @@ export default function AdminManageUser() {
                     <TableCell align="center">{users.fullName}</TableCell>
                     <TableCell align="center">{users.email}</TableCell>
                     <TableCell align="center">
-                      {users.roles[0] === "administrator" ? (
-                        <CheckCircleIcon
-                          fontSize="large"
-                          style={{ color: "green" }}
-                        />
-                      ) : (
-                        <CancelIcon fontSize="large" style={{ color: "red" }} />
-                      )}
-                    </TableCell>
-                    <TableCell align="center">
-                      {}
-                      {users.roles[0] === "Teacher" ? (
-                        <CheckCircleIcon
-                          fontSize="large"
-                          style={{ color: "green" }}
-                        />
-                      ) : (
-                        <CancelIcon fontSize="large" style={{ color: "red" }} />
-                      )}
+                      {users.roles.map((role) => (
+                        <p key={role}>{role}</p>
+                      ))}
                     </TableCell>
                     <TableCell align="right">
                       <ButtonGroup variant="contained">
                         <Button
-                          onClick={() => route.push(`/account`)}
+                          onClick={() =>
+                            route.push(`/admin/edit/user/${users.id}`)
+                          }
                           style={{ color: "black" }}
                         >
                           <EditIcon />

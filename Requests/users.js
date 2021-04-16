@@ -9,3 +9,8 @@ export const fetchUsers = async () => {
 export const deleteUser = async (id) => {
   return await axios.delete(`${baseUrl}Users/${id}`, config);
 };
+
+
+export const editUserRole = async (value) =>{
+  return await axios.put(`${baseUrl}Users/roles`,value, config);
+}
