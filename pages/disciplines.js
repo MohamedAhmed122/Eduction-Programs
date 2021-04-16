@@ -35,7 +35,6 @@ export default function disciplines() {
     }
   }, [isAuthenticated, route, currentUser?.role]);
 
-  console.log(currentUser?.roles[0])
 
    // set the first Semester and the second Semester
   useEffect(()=>{

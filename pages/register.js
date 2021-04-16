@@ -17,6 +17,9 @@ import styles from "../styles/index.module.css";
 import Alert from "@material-ui/lab/Alert";
 import FormSelect from "../Components/Form/FormSelect";
 import Loading from "../Components/Loading/Loading";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { TextField } from "@material-ui/core";
 
 export default function Register() {
   const route = useRouter();
@@ -108,7 +111,10 @@ export default function Register() {
     const group = groupRes?.find((group) => group.name === groups);
     const groupId = group?.id;
 
-    console.log(handleAccountType())
+    const type = handleAccountType();
+    console.log(type);
+
+    console.log(handleAccountType());
     const value = {
       name,
       email,
@@ -118,11 +124,24 @@ export default function Register() {
       phoneNumber: phone,
       education: {
         group: groupId,
-        admissionYear,
+        admissionYear: admissionYear || 0,
       },
       accountType: handleAccountType(),
     };
-    dispatch(userRegister(value));
+    const value2 = {
+      name,
+      email,
+      password,
+      confirmPassword: password,
+      birthday: dob,
+      phoneNumber: phone,
+      accountType: handleAccountType(),
+    };
+    if (type === "Teacher") {
+      dispatch(userRegister(value2));
+    } else {
+      dispatch(userRegister(value));
+    }
     // console.log(handleAccountType())
   };
 
@@ -146,7 +165,7 @@ export default function Register() {
           autoComplete="off"
         >
           <input
-            // required
+            required
             className="input"
             placeholder="Name"
             value={name}
@@ -168,7 +187,7 @@ export default function Register() {
             onChange={(e) => setPhone(e.target.value)}
           />
           <input
-            // required
+            required
             className="input"
             // type='date'
             placeholder="Date of Birth (2020-03-30)"
@@ -176,14 +195,7 @@ export default function Register() {
             onChange={(e) => setDob(e.target.value)}
           />
           <input
-            // required
-            className="input"
-            placeholder="AdmissionYear"
-            value={admissionYear}
-            onChange={(e) => setAdmissionYear(e.target.value)}
-          />
-          <input
-            // required
+            required
             className="input"
             placeholder="Password"
             type="password"
@@ -191,31 +203,32 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br /> <br />
-          <div className="flex check_box">
-            <input
-              type="checkbox"
-              name="student"
-              value={checkTeacher}
-              onChange={handleCheckTeacher}
-            />
-            <p style={{ marginLeft: 10 }} className="text_align">
-              Are you a Teacher?
-            </p>
-          </div>
-          <div className="flex check_box" style={{ marginTop: 20 }}>
-            <input
-              type="checkbox"
-              name="teacher"
-              value={checked}
-              onChange={handleCheckStudent}
-            />
-            <p style={{ marginLeft: 10 }} className="text_align">
-              Are you a Student?
-            </p>
-          </div>
+          <FormControlLabel
+            checked={checked}
+            color="primary"
+            onClick={handleCheckStudent}
+            control={<Radio />}
+            label="Are you Student Student"
+          />
+          <FormControlLabel
+            checked={checkTeacher}
+            color="primary"
+            onClick={handleCheckTeacher}
+            control={<Radio />}
+            label="Are you Teacher?"
+          />
           {checked && (
             <>
               <br /> <br />
+              <TextField
+                required
+                label="AdmissionYear"
+                className="input"
+                placeholder="AdmissionYear"
+                value={admissionYear}
+                onChange={(e) => setAdmissionYear(e.target.value)}
+              />
+              <br /> <br /> <br />
               <FormSelect
                 label="Faculty"
                 value={faculty}

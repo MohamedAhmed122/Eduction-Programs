@@ -28,7 +28,7 @@ export default function Navbar({ inverted = true }) {
             Disciplines
           </div>
           <div className={styles.link} >
-            {currentUser?.roles[0] !== "Administrator" ? (
+            {currentUser?.roles[0] !== "administrator" ? (
               <Chip
                 style={{ cursor: "pointer" }}
                 size="medium"
@@ -42,7 +42,7 @@ export default function Navbar({ inverted = true }) {
                 size="medium"
                 label={"Admin"}
                 icon={<FaceIcon />}
-                onClick={() => route.push("/admin/ManageFaculty")}
+                onClick={() => route.push("/admin/ManageUser")}
               />
             )}
           </div>
