@@ -6,11 +6,8 @@ export const fetchDisciplines = async (token, teacherId) => {
   return data;
 };
 
-export const fetchDisciplineById = async ( id) => {
-  const { data } = await axios.get(
-    `${baseUrl}Disciplines/${id}`,
-    config()
-  );
+export const fetchDisciplineById = async (id) => {
+  const { data } = await axios.get(`${baseUrl}Disciplines/${id}`, config());
   return data;
 };
 
@@ -36,4 +33,16 @@ export const fetchStudentsDisciplines = async (token, id) => {
 
 export const deleteDisciplineById = async (id) => {
   return await axios.delete(`${baseUrl}Disciplines/${id}`, config());
+};
+
+// create Disciplines
+export const createDiscipline = async (value) => {
+  const { data } = await axios.post(`${baseUrl}Disciplines`, value, config());
+  return data;
+};
+
+// Edit Disciplines
+export const editDiscipline = async (id,value) => {
+  const { data } = await axios.put(`${baseUrl}Disciplines/${id}`, value, config());
+  return data;
 };

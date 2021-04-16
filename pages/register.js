@@ -26,6 +26,7 @@ export default function Register() {
   );
   // state for inputs
   const [checked, setChecked] = useState(false);
+  const [checkTeacher, setCheckTeacher] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -90,6 +91,16 @@ export default function Register() {
     }
   }, [faculty, direction, groups]);
 
+  const handleAccountType = () => {
+    if (checkTeacher) {
+      return "Teacher";
+    } else if (checked) {
+      return "Student";
+    } else {
+      return "StudentTeacher";
+    }
+  };
+
   // handle Submit and dispatch userRegister
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -97,6 +108,7 @@ export default function Register() {
     const group = groupRes?.find((group) => group.name === groups);
     const groupId = group?.id;
 
+    console.log(handleAccountType())
     const value = {
       name,
       email,
@@ -108,9 +120,19 @@ export default function Register() {
         group: groupId,
         admissionYear,
       },
-      accountType: "Student",
+      accountType: handleAccountType(),
     };
     dispatch(userRegister(value));
+    // console.log(handleAccountType())
+  };
+
+  const handleCheckTeacher = () => {
+    setCheckTeacher(!checkTeacher);
+    setChecked(false);
+  };
+  const handleCheckStudent = () => {
+    setCheckTeacher(false);
+    setChecked(!checked);
   };
 
   if (success) return <Loading />;
@@ -124,14 +146,14 @@ export default function Register() {
           autoComplete="off"
         >
           <input
-            required
+            // required
             className="input"
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
-            required
+            // required
             className="input"
             placeholder="Email"
             type="email"
@@ -139,14 +161,14 @@ export default function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            required
+            // required
             className="input"
             placeholder="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
           <input
-            required
+            // required
             className="input"
             // type='date'
             placeholder="Date of Birth (2020-03-30)"
@@ -154,14 +176,14 @@ export default function Register() {
             onChange={(e) => setDob(e.target.value)}
           />
           <input
-            required
+            // required
             className="input"
             placeholder="AdmissionYear"
             value={admissionYear}
             onChange={(e) => setAdmissionYear(e.target.value)}
           />
           <input
-            required
+            // required
             className="input"
             placeholder="Password"
             type="password"
@@ -170,7 +192,12 @@ export default function Register() {
           />
           <br /> <br />
           <div className="flex check_box">
-            <input type="checkbox" name="student" />
+            <input
+              type="checkbox"
+              name="student"
+              value={checkTeacher}
+              onChange={handleCheckTeacher}
+            />
             <p style={{ marginLeft: 10 }} className="text_align">
               Are you a Teacher?
             </p>
@@ -180,7 +207,7 @@ export default function Register() {
               type="checkbox"
               name="teacher"
               value={checked}
-              onChange={() => setChecked(!checked)}
+              onChange={handleCheckStudent}
             />
             <p style={{ marginLeft: 10 }} className="text_align">
               Are you a Student?

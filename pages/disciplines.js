@@ -23,17 +23,19 @@ export default function disciplines() {
     if (!isAuthenticated) {
       route.push("/");
     }
-    if (currentUser?.role === "Teacher") {
+    if (currentUser?.roles[0] === "Teacher") {
       fetchTeacherDisciplines(currentUser.token, currentUser.userId)
         .then((res) => setDisciplines(res))
         .catch((err) => console.log(err));
     }
-    if (currentUser?.role === "Student") {
+    if (currentUser?.roles[0] === "Student") {
       fetchStudentsDisciplines(currentUser.token, currentUser.group)
         .then((res) => setStudentDisciplines(res))
         .catch((err) => console.log(err));
     }
   }, [isAuthenticated, route, currentUser?.role]);
+
+  console.log(currentUser?.roles[0])
 
    // set the first Semester and the second Semester
   useEffect(()=>{

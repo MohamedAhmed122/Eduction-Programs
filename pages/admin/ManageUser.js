@@ -34,12 +34,13 @@ export default function AdminManageUser() {
     fetchUsers()
       .then((res) => setUsers(res))
       .catch((err) => console.log(err));
-      if(deleted){
-          setTimeout(() => {
-            setDeleted(false)
-          }, 1000);
-      }
+    if (deleted) {
+      setTimeout(() => {
+        setDeleted(false);
+      }, 1000);
+    }
   }, [deleted]);
+  console.log(users);
 
   if (!users) return <Loading />;
   return (
@@ -76,7 +77,6 @@ export default function AdminManageUser() {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
                   <TableCell align="center">NAME</TableCell>
                   <TableCell align="center">EMAIL</TableCell>
                   <TableCell align="center">ADMIN</TableCell>
@@ -87,13 +87,10 @@ export default function AdminManageUser() {
               <TableBody>
                 {users?.map((users) => (
                   <TableRow key={users.id}>
-                    <TableCell component="th" scope="row">
-                      {users.id}
-                    </TableCell>
                     <TableCell align="center">{users.fullName}</TableCell>
                     <TableCell align="center">{users.email}</TableCell>
                     <TableCell align="center">
-                      {users.isAdmin ? (
+                      {users.roles[0] === "administrator" ? (
                         <CheckCircleIcon
                           fontSize="large"
                           style={{ color: "green" }}
@@ -103,7 +100,8 @@ export default function AdminManageUser() {
                       )}
                     </TableCell>
                     <TableCell align="center">
-                      {users.isTeacher ? (
+                      {}
+                      {users.roles[0] === "Teacher" ? (
                         <CheckCircleIcon
                           fontSize="large"
                           style={{ color: "green" }}
@@ -126,8 +124,8 @@ export default function AdminManageUser() {
                             deleteUser(users.id)
                               .then((res) => console.log(res))
                               .catch((err) => console.log(err));
-                              setDeleted(true)
-                              console.log(users.id)
+                            setDeleted(true);
+                            console.log(users.id);
                           }}
                         >
                           <DeleteIcon />

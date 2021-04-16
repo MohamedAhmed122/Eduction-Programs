@@ -16,7 +16,7 @@ export default function DisciplineTab({
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(()=>{
-      if( currentUser.role === 'Teacher'){
+      if( currentUser?.roles[0] === 'Teacher'){
         setActiveTab(2)
       }
   },[currentUser?.role])
@@ -25,7 +25,7 @@ export default function DisciplineTab({
     <div>
       <ul className={style.tabs}>
         <li></li>
-        {currentUser?.role !== "Teacher" && (
+        {currentUser?.roles[0] !== "Teacher" && (
           <>
             {" "}
             <li
@@ -42,7 +42,7 @@ export default function DisciplineTab({
             </li>{" "}
           </>
         )}
-        {currentUser?.role === "Teacher" && (
+        {currentUser?.roles[0] === "Teacher" && (
           <li
             onClick={() => setActiveTab(2)}
             className={activeTab === 2 ? style.current : null}

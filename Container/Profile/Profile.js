@@ -13,6 +13,7 @@ export default function Profile() {
     "https://simg.nicepng.com/png/small/128-1280406_view-user-icon-png-user-circle-icon-png.png";
   const AvatarSrc = `${baseURL}Profiles/get-avatar/${currentUser?.userId}`;
   const src = AvatarSrc ? AvatarSrc : placeholderSrc;
+  console.log(AvatarSrc, '1')
 
   if (loading) return <Loading />;
   return (
@@ -20,7 +21,7 @@ export default function Profile() {
       <Card className={styles.card}>
         <div className="flex_col">
           {/* <img className={styles.img} src={src} alt='Img'/> */}
-          <img className={styles.img} src={src} />
+          <img className={styles.img} src={src || placeholderSrc} />
         </div>
         <div className="flex" style={{ marginTop: 20 }}>
           <h3 className={styles.mainText}>Name:</h3>
@@ -38,26 +39,28 @@ export default function Profile() {
           <h3 className={styles.mainText}>DOB:</h3>
           <p>{profile.birthDay}</p>
         </div>
-        {!currentUser.role === "Teacher" && (
-          <div className="flex" style={{ marginTop: 20 }}>
-            <h3 className={styles.mainText}>Admission Year:</h3>
-            <p>{profile.admissionYear}</p>
-          </div>
+        {currentUser?.roles[0] === "Student" && (
+          <>
+            <div className="flex" style={{ marginTop: 20 }}>
+              <h3 className={styles.mainText}>Admission Year:</h3>
+              <p>{profile.admissionYear}</p>
+            </div>
+            <br />
+            <br />
+            <div className="flex" style={{ marginTop: 20 }}>
+              <h3 className={styles.mainText}>Faculty:</h3>
+              <p>{profile.faculty}</p>
+            </div>
+            <div className="flex" style={{ marginTop: 20 }}>
+              <h3 className={styles.mainText}>Direction:</h3>
+              <p>{profile.direction}</p>
+            </div>
+            <div className="flex" style={{ marginTop: 20 }}>
+              <h3 className={styles.mainText}>Group:</h3>
+              <p>{profile.group}</p>
+            </div>{" "}
+          </>
         )}
-        <br />
-        <br />
-        <div className="flex" style={{ marginTop: 20 }}>
-          <h3 className={styles.mainText}>Faculty:</h3>
-          <p>{profile.faculty}</p>
-        </div>
-        <div className="flex" style={{ marginTop: 20 }}>
-          <h3 className={styles.mainText}>Direction:</h3>
-          <p>{profile.direction}</p>
-        </div>
-        <div className="flex" style={{ marginTop: 20 }}>
-          <h3 className={styles.mainText}>Group:</h3>
-          <p>{profile.group}</p>
-        </div>
       </Card>
     </div>
   );

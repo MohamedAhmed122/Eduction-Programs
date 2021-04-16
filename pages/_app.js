@@ -14,7 +14,6 @@ import Footer from '../Layouts/Footer/Footer'
 import '../styles/globals.css'
 
 
-
 function MyApp({ Component, pageProps }) {
   const { pathname } = useRouter()
   const inverted = (pathname === '/register' || pathname === '/' ) ? true : false
